@@ -1,5 +1,9 @@
 <div class="card">
   <!--begin::Card body-->
+  <span
+    class="spinner-border spinner-border-sm align-middle ms-2"
+    *ngIf="isLoading$ | async"
+  ></span>
   <div class="card-body border-top p-9">
     <div class="row mb-6">
       <div class="col-4">
@@ -76,26 +80,33 @@
 
     <div class="row mb-6">
       <div class="col-lg-4 fv-row fv-plugins-icon-container">
-        <label class="fw-semibold fs-6 py-2">Nombre:</label>
+        <label class="fw-semibold fs-6 py-2">Nombre: (*)</label>
         <input
           type="text"
           name="nombre"
+          [(ngModel)]="name"
           class="form-control form-control-lg form-control-solid"
           placeholder="Ej: Computadoras"
         />
       </div>
       <div class="col-lg-4 fv-row fv-plugins-icon-container">
-        <label class="fw-semibold fs-6 py-2">Ícono:</label>
+        <label class="fw-semibold fs-6 py-2"
+          >Ícono: ( {{ type_categorie == 1 ? "*" : "Opcional" }} )</label
+        >
         <input
           type="text"
           name="icon"
+          [(ngModel)]="icon"
           class="form-control form-control-lg form-control-solid"
           placeholder="Ej: Computadoras"
         />
       </div>
       <div class="row mb-6">
         <div class="col-lg-6 col-md-6 col-sm-12 my-2">
-          <label class="form-label">Sube tu imagen: *</label>
+          <label class="form-label"
+            >Sube tu imagen: (
+            {{ type_categorie == 1 ? "*" : "Opcional" }} )</label
+          >
           <div class="custom-file">
             <input
               type="file"
@@ -109,44 +120,81 @@
             >
           </div>
           <div class="">
-            <img
-              class="img py-3"
-              src="https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2.svg"
-              width="200"
-              alt=""
-            />
+            <img class="img py-3" [src]="img_preview" width="200" alt="" />
           </div>
         </div>
         <div class="col-lg-4 fv-row fv-plugins-icon-container">
-          <label class="fw-semibold fs-6 py-2">Posición:</label>
+          <label class="fw-semibold fs-6 py-2">Posición: (*)</label>
           <input
             type="number"
             name="position"
+            [(ngModel)]="position"
             class="form-control form-control-lg form-control-solid"
             placeholder="Ej: 5"
           />
         </div>
       </div>
       <div class="row mb-6" *ngIf="type_categorie != 1">
-        <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type_categorie == 2 || type_categorie == 3">
-          <label class="fw-semibold fs-6 py-2">Departamento:(Primer Nivel)</label>
+        <div
+          class="col-lg-6 col-md-6 col-sm-12 my-2"
+          *ngIf="type_categorie == 2"
+        >
+          <label class="fw-semibold fs-6 py-2"
+            >Departamento:(Primer Nivel)</label
+          >
           <select
             class="form-control form-select-solid fw-bolder"
             name="departament"
+            [(ngModel)]="categorie_second_id"
             placeholder="Selec. Departamento"
           >
-            <option value="">Todos</option>
+            <option value="">--Seleccionar--</option>
+            <ng-container *ngFor="let item of categories_first">
+              <option [value]="item.id">{{ item.name }}</option>
+            </ng-container>
           </select>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type_categorie == 3">
+        <div
+          class="col-lg-6 col-md-6 col-sm-12 my-2"
+          *ngIf="type_categorie == 3"
+        >
+          <label class="fw-semibold fs-6 py-2"
+            >Departamento:(Primer Nivel)</label
+          >
+          <select
+            class="form-control form-select-solid fw-bolder"
+            name="departament"
+            [(ngModel)]="categorie_third_id"
+            placeholder="Selec. Departamento"
+          >
+            <option value="">--Seleccionar--</option>
+            <ng-container *ngFor="let item of categories_first">
+              <option [value]="item.id">{{ item.name }}</option>
+            </ng-container>
+          </select>
+        </div>
+        <div
+          class="col-lg-6 col-md-6 col-sm-12 my-2"
+          *ngIf="type_categorie == 3"
+        >
           <label class="fw-semibold fs-6 py-2">Categoría:(Segundo Nivel)</label>
           <select
             class="form-control form-select-solid fw-bolder"
             name="categorie"
+            [(ngModel)]="categorie_second_id"
             placeholder="Selec. Categoría"
           >
-            <option value="">Todos</option>
+            <option value="">--Seleccionar--</option>
+            <ng-container *ngFor="let item of categories_seconds">
+              <option [value]="item.id">{{ item.name }}</option>
+            </ng-container>
           </select>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-3">
+          <button class="btn btn-primary" (click)="save()">Crear</button>
         </div>
       </div>
     </div>
