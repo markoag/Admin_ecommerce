@@ -23,6 +23,7 @@ export class CreateCategorieComponent {
 
   categories_first: any = [];
   categories_seconds: any = [];
+  categories_seconds_backups: any = [];
 
   constructor(
     public categorieService: CategoriesService,
@@ -65,6 +66,16 @@ export class CreateCategorieComponent {
 
   changeTypeCategorie(val: number) {
     this.type_categorie = val;
+    this.categorie_third_id = '';
+    this.categorie_second_id = '';
+    this.categories_seconds_backups = [];
+  }
+
+  changeDepartament() {
+    this.categories_seconds_backups = this.categories_seconds.filter(
+      (item: any) => item.categorie_second_id == this.categorie_third_id
+    );
+    console.log(this.categories_seconds_backups);
   }
 
   save() {
@@ -101,7 +112,9 @@ export class CreateCategorieComponent {
 
     let formData = new FormData();
     formData.append('name', this.name);
-    formData.append('icon', this.icon);
+    if (this.icon) {
+      formData.append('icon', this.icon);
+    }
     formData.append('position', this.position + '');
     formData.append('type_categorie', this.type_categorie + '');
     if (this.file_image) {
@@ -117,6 +130,10 @@ export class CreateCategorieComponent {
     this.categorieService.createCategories(formData).subscribe((res: any) => {
       console.log(res);
 
+      if (res.message == 403) {
+        this.toastr.error('Validación', 'El nombre de la categoría ya existe');
+        return;
+      }
       // Limpiar campos
       this.name = '';
       this.icon = '';

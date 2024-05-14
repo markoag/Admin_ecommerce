@@ -20,10 +20,10 @@ export class CategoriesService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  listCategories(search: string) {
+  listCategories(search: string, page:number = 1) {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authservice.token});
-    let URL = URL_SERVICIOS + '/admin/categories';
+    let URL = URL_SERVICIOS + '/admin/categories?page='+page+'&search='+search;
     return this.http.get(URL, {headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
@@ -47,10 +47,10 @@ export class CategoriesService {
     );
   }
 
-  showCategorie(categorie_id: string) {
+  showCategorie(categorie_id: string) {    
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authservice.token});
-    let URL = URL_SERVICIOS + '/admin/categories'+ categorie_id;
+    let URL = URL_SERVICIOS + '/admin/categories/'+ categorie_id;
     return this.http.get(URL, {headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
@@ -59,7 +59,7 @@ export class CategoriesService {
   updateCategories(categorie_id: string, data: any) {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authservice.token});
-    let URL = URL_SERVICIOS + '/admin/categories'+ categorie_id;
+    let URL = URL_SERVICIOS + '/admin/categories/'+ categorie_id;
     return this.http.post(URL,data, {headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
@@ -68,7 +68,7 @@ export class CategoriesService {
   deleteCategories(categorie_id: string) {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authservice.token});
-    let URL = URL_SERVICIOS + '/admin/categories'+ categorie_id;
+    let URL = URL_SERVICIOS + '/admin/categories/'+ categorie_id;
     return this.http.delete(URL, {headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );

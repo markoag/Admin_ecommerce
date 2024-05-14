@@ -67,7 +67,7 @@
               type="radio"
               (click)="changeTypeCategorie(3)"
               name="usage"
-              value="2"
+              value="3"
             />
           </span>
           <span class="ms-5">
@@ -140,7 +140,7 @@
           *ngIf="type_categorie == 2"
         >
           <label class="fw-semibold fs-6 py-2"
-            >Departamento:(Primer Nivel)</label
+            >Departamento:(Primer Nivel *)</label
           >
           <select
             class="form-control form-select-solid fw-bolder"
@@ -159,12 +159,13 @@
           *ngIf="type_categorie == 3"
         >
           <label class="fw-semibold fs-6 py-2"
-            >Departamento:(Primer Nivel)</label
+            >Departamento:(Primer Nivel *)</label
           >
           <select
             class="form-control form-select-solid fw-bolder"
             name="departament"
             [(ngModel)]="categorie_third_id"
+            (change)="changeDepartament()"
             placeholder="Selec. Departamento"
           >
             <option value="">--Seleccionar--</option>
@@ -177,7 +178,7 @@
           class="col-lg-6 col-md-6 col-sm-12 my-2"
           *ngIf="type_categorie == 3"
         >
-          <label class="fw-semibold fs-6 py-2">Categoría:(Segundo Nivel)</label>
+          <label class="fw-semibold fs-6 py-2">Categoría:(Segundo Nivel *)</label>
           <select
             class="form-control form-select-solid fw-bolder"
             name="categorie"
@@ -185,7 +186,7 @@
             placeholder="Selec. Categoría"
           >
             <option value="">--Seleccionar--</option>
-            <ng-container *ngFor="let item of categories_seconds">
+            <ng-container *ngFor="let item of categories_seconds_backups">
               <option [value]="item.id">{{ item.name }}</option>
             </ng-container>
           </select>
