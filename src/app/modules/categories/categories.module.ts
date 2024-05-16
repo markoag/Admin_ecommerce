@@ -9,10 +9,8 @@ import { DeleteCategorieComponent } from './delete-categorie/delete-categorie.co
 import { ListCategorieComponent } from './list-categorie/list-categorie.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg-2';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-
 @NgModule({
   declarations: [
     CategoriesComponent,

@@ -18,7 +18,7 @@
           [(ngModel)]="search"
           data-kt-user-table-filter="search"
           class="form-control form-control-solid w-250px ps-13"
-          placeholder="Buscar categoría"
+          placeholder="Buscar atributos"
         />
       </div>
       <!--end::Search-->
@@ -31,16 +31,16 @@
       <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
         <!--begin::Filter-->
         <!-- <button
-          type="button"
-          class="btn btn-light-primary me-3"
-          data-kt-menu-trigger="click"
-          data-kt-menu-placement="bottom-end"
-        >
-          <i class="ki-duotone ki-filter fs-2"
-            ><span class="path1"></span><span class="path2"></span
-          ></i>
-          Filter
-        </button> -->
+            type="button"
+            class="btn btn-light-primary me-3"
+            data-kt-menu-trigger="click"
+            data-kt-menu-placement="bottom-end"
+          >
+            <i class="ki-duotone ki-filter fs-2"
+              ><span class="path1"></span><span class="path2"></span
+            ></i>
+            Filter
+          </button> -->
         <!--begin::Menu 1-->
         <div
           class="menu menu-sub menu-sub-dropdown w-300px w-md-325px"
@@ -187,8 +187,13 @@
         <!--end::Filter-->
 
         <!--begin::Add user-->
-        <a routerLink="/categorias/registro" class="btn btn-primary">
-          <i class="ki-duotone ki-plus fs-2"></i> Add Categoría
+        <a
+          href="#"
+          onclick="return false"
+          (click)="openModalCreateAttribute()"
+          class="btn btn-primary"
+        >
+          <i class="ki-duotone ki-plus fs-2"></i> Add Atributo
         </a>
         <!--end::Add user-->
       </div>
@@ -243,7 +248,8 @@
                 aria-label="Role: Activate to sort"
                 tabindex="0"
               >
-                <span class="dt-column-title" role="button">Ícono</span
+                <span class="dt-column-title" role="button"
+                  >Tipo de Atributo</span
                 ><span class="dt-column-order"></span>
               </th>
               <th
@@ -265,7 +271,8 @@
                 aria-label="Two-step : Activate to sort"
                 tabindex="0"
               >
-                <span class="dt-column-title" role="button">Departamento</span
+                <span class="dt-column-title" role="button"
+                  >Nº de Propiedades</span
                 ><span class="dt-column-order"></span>
               </th>
               <th
@@ -276,7 +283,8 @@
                 aria-label="Joined Date: Activate to sort"
                 tabindex="0"
               >
-                <span class="dt-column-title" role="button">Categoría</span
+                <span class="dt-column-title" role="button"
+                  >Fecha de Creación</span
                 ><span class="dt-column-order"></span>
               </th>
               <th
@@ -292,61 +300,55 @@
             </tr>
           </thead>
           <tbody class="text-gray-600 fw-semibold">
-            <ng-container *ngFor="let categorie of categories">
+            <ng-container *ngFor="let attribute of attributes">
               <tr>
                 <td>
-                  <div class="d-flex align-items-center">
-                    <div
-                      class="symbol symbol-50px me-5"
-                      *ngIf="categorie.image"
-                    >
-                      <img [src]="categorie.image" class="" alt="" />
-                    </div>
-
-                    <div class="d-flex justify-content-start flex-column">
-                      <a
-                        href="#"
-                        class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6"
-                        >{{ categorie.name }}</a
-                      >
-                      <!-- <span class="text-muted fw-semibold text-muted d-block fs-7"
-                        >HTML, JS, ReactJS</span
-                      > -->
-                    </div>
-                  </div>
+                  <span>{{ attribute.name }}</span>
                 </td>
                 <td>
-                  <ng-container *ngIf="categorie.icon">
-                    <div [id]="'svg-categorie-' + categorie.id">
-                      {{ getDomParser(categorie) }}
-                    </div>
-                  </ng-container>
+                  <span>{{ getNameAttribute(attribute.type_attribute) }}</span>
                 </td>
                 <td>
                   <span
                     class="badge badge-light-primary fs-7 fw-bold"
-                    *ngIf="categorie.state == 1"
+                    *ngIf="attribute.state == 1"
                     >Activo</span
                   >
                   <span
                     class="badge badge-light-danger fs-7 fw-bold"
-                    *ngIf="categorie.state == 2"
+                    *ngIf="attribute.state == 2"
                     >Inactivo</span
                   >
                 </td>
                 <td>
-                  <span *ngIf="categorie.categorie_second">
-                    {{ categorie.categorie_second.name }}
+                  <span>
+                    {{ attribute.properties.length }}
                   </span>
                 </td>
                 <td>
-                  <span *ngIf="categorie.categorie_third">
-                    {{ categorie.categorie_third.name }}
+                  <span>
+                    {{ attribute.created_at }}
                   </span>
                 </td>
                 <td class="text-end">
                   <a
-                    [routerLink]="'/categorias/listar/editar/'+categorie.id"
+                    href="#"
+                    onclick="return false"
+                    *ngIf="
+                      attribute.type_attribute == 3 ||
+                      attribute.type_attribute == 4
+                    "
+                    (click)="openModalRegisterProperties(attribute)"
+                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  >
+                    <i class="ki-duotone ki-switch fs-2"
+                      ><span class="path1"></span><span class="path2"></span
+                    ></i>
+                  </a>
+                  <a
+                    href="#"
+                    onclick="return false"
+                    (click)="openModalEditAttribute(attribute)"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   >
                     <i class="ki-duotone ki-pencil fs-2"
@@ -355,7 +357,8 @@
                   </a>
 
                   <a
-                    onclick="return false" (click)="deleteCategorie(categorie)"
+                    onclick="return false"
+                    (click)="deleteAttribute(attribute)"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                   >
                     <i class="ki-duotone ki-trash fs-2"
