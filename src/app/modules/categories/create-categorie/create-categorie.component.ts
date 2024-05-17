@@ -145,7 +145,7 @@ export class CreateCategorieComponent {
       this.categorie_second_id = '';
       this.categorie_third_id = '';
 
-      this.toastr.success('Categoría creada correctamente');
+      this.toastr.success('Éxito','Categoría creada correctamente');
       this.config();
     });
   }
