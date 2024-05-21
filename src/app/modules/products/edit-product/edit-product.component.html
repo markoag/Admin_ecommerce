@@ -1,0 +1,255 @@
+<div class="card">
+  <!--begin::Card body-->
+  <span
+    class="spinner-border spinner-border-sm align-middle ms-2"
+    *ngIf="isLoading$ | async"
+  ></span>
+  <div class="card-body border-top p-9">
+    <div class="row mb-6">
+      <div class="col-lg-8 fv-row fv-plugins-icon-container">
+        <label class="fw-semibold fs-6 py-2 required">Título:</label>
+        <input
+          type="text"
+          name="title"
+          [(ngModel)]="title"
+          class="form-control form-control-lg form-control-solid"
+          placeholder="Laptop HP 15.6"
+        />
+      </div>
+      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+        <label class="fw-semibold fs-6 py-2 required">Sku:</label>
+        <input
+          type="text"
+          name="sku"
+          [(ngModel)]="sku"
+          class="form-control form-control-lg form-control-solid"
+          placeholder="P000001"
+        />
+      </div>
+    </div>
+    <div class="row mb-6">
+      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+        <label class="fw-semibold fs-6 py-2 required">Precio PVP:</label>
+        <input
+          type="number"
+          name="price_pvp"
+          [(ngModel)]="price_pvp"
+          class="form-control form-control-lg form-control-solid"
+          placeholder="500"
+        />
+      </div>
+      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+        <label class="fw-semibold fs-6 py-2 required">Precio Desct:</label>
+        <input
+          type="number"
+          name="price_desc"
+          [(ngModel)]="price_desc"
+          class="form-control form-control-lg form-control-solid"
+          placeholder="550"
+        />
+      </div>
+      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+        <label class="fw-semibold fs-6 py-2 required">Marcas:</label>
+        <select
+          class="form-control form-select-solid fw-bolder"
+          name="brand"
+          [(ngModel)]="brand_id"
+          placeholder="Selec. Marca"
+        >
+          <option value="">--Seleccionar--</option>
+          <ng-container *ngFor="let item of brands">
+            <option [value]="item.id">{{ item.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-6">
+      <div class="col-4">
+        <label class="fw-semibold fs-6 py-2 required"
+          >Departamento: (Primer Nivel)</label
+        >
+        <select
+          class="form-control form-select-solid fw-bolder"
+          name="departament"
+          [(ngModel)]="categorie_first_id"
+          (change)="changeDepartament()"
+          placeholder="Selec. Departamento"
+        >
+          <option value="">--Seleccionar--</option>
+          <ng-container *ngFor="let item of categories_first">
+            <option [value]="item.id">{{ item.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-4">
+        <label class="fw-semibold fs-6 py-2">Categoría: (Segundo Nivel)</label>
+        <select
+          class="form-control form-select-solid fw-bolder"
+          name="categorie"
+          [(ngModel)]="categorie_second_id"
+          (change)="changeCategorie()"
+          placeholder="Selec. Categoría"
+        >
+          <option value="">--Seleccionar--</option>
+          <ng-container *ngFor="let item of categories_seconds_backups">
+            <option [value]="item.id">{{ item.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-4">
+        <label class="fw-semibold fs-6 py-2">Subategoría: (Tercer Nivel)</label>
+        <select
+          class="form-control form-select-solid fw-bolder"
+          name="categorie"
+          [(ngModel)]="categorie_third_id"
+          placeholder="Selec. Subategoría"
+        >
+          <option value="">--Seleccionar--</option>
+          <ng-container *ngFor="let item of categories_thirds_backups">
+            <option [value]="item.id">{{ item.name }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-6">
+      <div class="col-lg-4 col-md-4 col-sm-12 my-2">
+        <label class="fw-semibold fs-6 py-2 required">Add Etiqueta:</label>
+        <input
+          type="text"
+          name="word"
+          (keyup.enter)="addItems()"
+          [(ngModel)]="word"
+          class="form-control form-control-lg form-control-solid"
+          placeholder="xxxxxxx"
+        />
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="!isShowMultiSelect">
+        <label class="fw-semibold fs-6 py-2">Etiquetas: </label>
+        <ng-multiselect-dropdown
+          [placeholder]="'Selecciona tus etiquetas'"
+          [settings]="dropdownSettings"
+          [data]="dropdownList"
+          [(ngModel)]="selectedItems"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+
+    <div class="row mb-6">
+      <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+        <label class="form-label required fw-bold fs-6 mb-2"
+          >Sube tu imagen:</label
+        >
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="customFile"
+            accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"
+            (change)="processFile($event)"
+          />
+          <label class="custom-file-label" for="customFile">
+            Elija el archivo</label
+          >
+        </div>
+        <div class="">
+          <img class="img py-3" [src]="img_preview" width="200" alt="" />
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+        <div class="row">
+          <div class="col-8">
+            <label class="form-label required fw-bold fs-6 mb-2"
+              >Sube tus imagenes:</label
+            >
+            <div class="custom-file">
+              <input
+                type="file"
+                class="custom-file-input"
+                id="customFileImages"
+                accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"
+                (change)="processFileE($event)"
+              />
+              <label class="custom-file-label" for="customFileImages">
+                Elija el archivo</label
+              >
+            </div>
+            <div class="">
+              <img
+                class="img py-3"
+                [src]="img_add_preview"
+                width="100"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="col-4">
+            <button class="btn btn-primary btn-sm" (click)="addImagen()">+</button>
+          </div>
+          <div class="col-12">
+            <div
+              id="kt_table_users_wrapper"
+              class="dt-container dt-bootstrap5 dt-empty-footer"
+            >
+              <div class="table-responsive w-100">
+                <table
+                  class="table align-middle table-row-dashed fs-6 gy-5 dataTable"
+                  id="kt_advance_table_widget_1"
+                >
+                  <thead>
+                    <tr class="text-left">
+                      <th>IMAGEN</th>
+                      <th>ACCIÓN</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let imagen_ of images_files; let i = index">
+                      <td>
+                        <img [src]="imagen_.image" width="80" alt="" />
+                      </td>
+                      <td>
+                        <button
+                          class="ml-5 btn btn-sm btn-danger"
+                          (click)="removeImages(imagen_.id)"
+                        >
+                          x
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-6">
+      <div class="col-lg-8 fv-row fv-plugins-icon-container">
+        <label class="fs-6 fw-semibold mb-2">Descripción:</label>
+        <ckeditor [data]="description" (change)="onChange($event)"></ckeditor>
+      </div>
+      <div class="col-lg-8 fv-row fv-plugins-icon-container">
+        <label class="fs-6 fw-semibold mb-2">Resumen:</label>
+        <textarea
+          class="form-control form-control-solid"
+          rows="3"
+          name="summary"
+          placeholder="*********"
+          [(ngModel)]="summary"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="row mb-6">
+      <div class="col-3">
+        <button class="btn btn-primary" (click)="save()">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>

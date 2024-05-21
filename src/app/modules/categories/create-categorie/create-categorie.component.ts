@@ -75,7 +75,7 @@ export class CreateCategorieComponent {
     this.categories_seconds_backups = this.categories_seconds.filter(
       (item: any) => item.categorie_second_id == this.categorie_third_id
     );
-    console.log(this.categories_seconds_backups);
+    // console.log(this.categories_seconds_backups);
   }
 
   save() {

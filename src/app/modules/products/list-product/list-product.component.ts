@@ -1,0 +1,108 @@
+import { Component } from '@angular/core';
+import { ProductService } from '../service/product.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteProductComponent } from '../delete-product/delete-product.component';
+import { ToastrService } from 'ngx-toastr';
+
+@Component({
+  selector: 'app-list-product',
+  templateUrl: './list-product.component.html',
+  styleUrls: ['./list-product.component.scss']
+})
+export class ListProductComponent {
+
+  products: any[] = [];
+  search: string = '';
+  totalPages: number = 0;
+  currentPage: number = 1;
+  isLoading$: any;
+
+  brands: any = [];
+  brand_id: string = '';
+  categorie_first_id: string = '';
+  categorie_second_id: string = '';
+  categorie_third_id: string = '';
+  categories_first: any = [];
+  categories_seconds: any = [];
+  categories_seconds_backups: any = [];
+  categories_thirds: any = [];
+  categories_thirds_backups: any = [];
+
+  constructor(
+    public productService: ProductService,
+    public modalService: NgbModal,
+    private tastr: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.listProducts();
+    this.isLoading$ = this.productService.isLoading$;
+    this.configAll();
+  }
+  configAll() {
+    this.productService.configAll().subscribe((res: any) => {
+      console.log(res);
+      this.brands = res.brands;
+      this.categories_first = res.categories_first;
+      this.categories_seconds = res.categories_seconds;
+      this.categories_thirds = res.categories_thirds;
+    });
+  }
+
+  listProducts(page = 1) {
+    let data = {
+      search: this.search,
+      brand_id: this.brand_id,
+      categorie_first_id: this.categorie_first_id,
+      categorie_second_id: this.categorie_second_id,
+      categorie_third_id: this.categorie_third_id
+    };
+    this.productService
+      .listProducts(data, page)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.products = res.products.data;
+        this.totalPages = res.total;
+        this.currentPage = page;
+      }, (err: any) => {
+        this.tastr.error("Api Response - Cominiquese con el sistema", err.error.message);
+      });
+  }
+
+  changeDepartament() {
+    this.categories_seconds_backups = this.categories_seconds.filter(
+      (item: any) => item.categorie_second_id == this.categorie_first_id
+    );
+    // limpia el select de categorias y subcategorias
+    this.categorie_second_id = '';
+    this.categorie_third_id = '';
+  }
+
+  changeCategorie() {
+    this.categories_thirds_backups = this.categories_thirds.filter(
+      (item: any) => item.categorie_second_id == this.categorie_second_id
+    );
+    // limpia el select de subcategorias
+    this.categorie_third_id = '';
+  }
+
+  searchTo() {
+    this.listProducts();
+  }
+
+  loadPage($event: any) {
+    this.listProducts($event);
+  }
+
+  deleteProduct(product: any) {
+    const modalRef = this.modalService.open(DeleteProductComponent, {centered: true, size: 'md'});
+    modalRef.componentInstance.product = product;
+
+    modalRef.componentInstance.ProductD.subscribe((res: any) => {
+      let INDEX = this.products.findIndex((item: any) => item.id == product.id);
+      if (INDEX != -1) {
+        this.products.splice(INDEX, 1);
+      }
+    });
+  }
+}

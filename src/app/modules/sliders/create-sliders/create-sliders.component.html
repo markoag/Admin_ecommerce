@@ -1,5 +1,4 @@
 <div class="card">
-  <!--begin::Card body-->
   <span
     class="spinner-border spinner-border-sm align-middle ms-2"
     *ngIf="isLoading$ | async"
@@ -36,55 +35,56 @@
           placeholder="Oferta exclusiva -50% en productos seleccionados"
         />
       </div>
-      <div class="row mb-6">
-        <div class="col-lg-6 col-md-6 col-sm-12 my-2">
-          <label class="form-label required fw-bold fs-6 mb-2">Sube tu imagen:</label>
-          <div class="custom-file">
-            <input
-              type="file"
-              class="custom-file-input"
-              id="customFile"
-              accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"
-              (change)="processFile($event)"
-            />
-            <label class="custom-file-label" for="customFile">
-              Elija el archivo</label
-            >
-          </div>
-          <div class="">
-            <img class="img py-3" [src]="img_preview" width="200" alt="" />
-          </div>
-        </div>
-        <div class="col-lg-4 fv-row fv-plugins-icon-container">
-          <label class="fw-semibold fs-6 py-2">Link: (Opcional)</label>
+    </div>
+    <div class="row mb-6">
+      <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+        <label class="form-label required fw-bold fs-6 mb-2"
+          >Sube tu imagen:</label
+        >
+        <div class="custom-file">
           <input
-            type="text"
-            name="link"
-            [(ngModel)]="link"
-            class="form-control form-control-lg form-control-solid"
-            placeholder="https://www.google.com"
+            type="file"
+            class="custom-file-input"
+            id="customFile"
+            accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"
+            (change)="processFile($event)"
           />
+          <label class="custom-file-label" for="customFile">
+            Elija el archivo</label
+          >
         </div>
-        <div class="col-lg-4 fv-row fv-plugins-icon-container">
-          <label for="etiqueta_especial" class="fw-bold fs-6 mb-2"
-            >Color: (Opcional)
-          </label>
-          <input
-            class="form-control mb-3 mb-lg-0"
-            type="color"
-            id="color"
-            name="color"
-            [(ngModel)]="color"
-          />
+        <div class="">
+          <img class="img py-3" [src]="img_preview" width="200" alt="" />
         </div>
       </div>
+      <div class="col-lg-6 fv-row fv-plugins-icon-container">
+        <label class="fw-semibold fs-6 py-2">Link: (Opcional)</label>
+        <input
+          type="text"
+          name="link"
+          [(ngModel)]="link"
+          class="form-control form-control-lg form-control-solid"
+          placeholder="https://www.google.com"
+        />
+      </div>
+      <div class="col-lg-6 fv-row fv-plugins-icon-container">
+        <label for="etiqueta_especial" class="fw-bold fs-6 mb-2"
+          >Color: (Opcional)
+        </label>
+        <input
+          class="form-control mb-3 mb-lg-0"
+          type="color"
+          id="color"
+          name="color"
+          [(ngModel)]="color"
+        />
+      </div>
+    </div>
 
-      <div>
-        <div class="col-3">
-          <button class="btn btn-primary" (click)="save()">Crear</button>
-        </div>
+    <div>
+      <div class="col-3">
+        <button class="btn btn-primary" (click)="save()">Crear</button>
       </div>
     </div>
   </div>
-  <!--end::Card body-->
 </div>
