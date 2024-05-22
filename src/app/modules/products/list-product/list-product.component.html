@@ -390,7 +390,7 @@
                 </td>
                 <td>
                   <span>
-                    $ {{ product.price_pvp }} / $ {{ product.price_desc }} 
+                    $ {{ product.price_pvp }} / $ {{ product.price_desc }}
                   </span>
                 </td>
                 <td>
@@ -428,6 +428,17 @@
 
                 <td class="text-end">
                   <a
+                    [routerLink]="
+                      '/productos/listar/variacion-especificacion/' + product.id
+                    "
+                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  >
+                    <i class="ki-duotone ki-delivery-3 fs-2"
+                      ><span class="path1"></span><span class="path2"></span
+                      ><span class="path3"></span
+                    ></i>
+                  </a>
+                  <a
                     [routerLink]="'/productos/listar/editar/' + product.id"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   >
@@ -435,7 +446,6 @@
                       ><span class="path1"></span><span class="path2"></span
                     ></i>
                   </a>
-
                   <a
                     href="#"
                     onclick="return false;"

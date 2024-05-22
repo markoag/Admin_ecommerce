@@ -4,6 +4,7 @@ import { ProductsComponent } from './products.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ListProductComponent } from './list-product/list-product.component';
+import { CreateVariationSpecificationsComponent } from './attributes/create-variation-specifications/create-variation-specifications.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'listar',
         component: ListProductComponent,
+      },
+      {
+        path: 'listar/variacion-especificacion/:id',
+        component: CreateVariationSpecificationsComponent,
       },
     ],
   },
