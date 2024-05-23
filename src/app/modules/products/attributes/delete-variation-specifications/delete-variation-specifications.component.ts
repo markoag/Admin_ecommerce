@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AttributesService } from '../../service/attributes.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-delete-variation-specifications',
@@ -7,4 +10,25 @@ import { Component } from '@angular/core';
 })
 export class DeleteVariationSpecificationsComponent {
 
+  @Input() specification: any;
+  @Output() EspecificationD: EventEmitter<any> = new EventEmitter();
+  isLoading: any;
+
+  constructor(
+    public attributeService: AttributesService,
+    private toastr: ToastrService,
+    public modal: NgbActiveModal,
+  ) {}
+
+  ngOnInit(): void {
+    this.isLoading = this.attributeService.isLoading$;
+  }
+
+  delete() {
+    this.attributeService.deleteSpecification(this.specification.id).subscribe((res: any) => {
+      this.toastr.success('Éxito','Especificación eliminada correctamente');
+      this.EspecificationD.emit({message: 200});
+      this.modal.close();
+    });
+  }
 }

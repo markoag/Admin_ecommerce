@@ -55,5 +55,23 @@ export class AttributesService {
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
+
+  updateSpecification(specification_id: string ,data: any) {
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authservice.token});
+    let URL = URL_SERVICIOS + '/admin/specifications/'+specification_id;    
+    return this.http.put(URL,data,{headers: headers}).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  deleteSpecification(specification_id: string) {
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.authservice.token});
+    let URL = URL_SERVICIOS + '/admin/specifications/'+ specification_id;
+    return this.http.delete(URL, {headers: headers}).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
   
 }

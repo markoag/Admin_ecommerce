@@ -348,6 +348,8 @@
                       <td class="text-end">
                         <a
                           href="#"
+                          onclick="return false;"
+                          (click)="editSpecification(specification)"
                           class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                         >
                           <i class="ki-duotone ki-pencil fs-2"
@@ -358,6 +360,8 @@
 
                         <a
                           href="#"
+                          onclick="return false;"
+                          (click)="deleteSpecification(specification)"
                           class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                         >
                           <i class="ki-duotone ki-trash fs-2"

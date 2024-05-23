@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastrService } from 'ngx-toastr';
+import { EditVariationSpecificationsComponent } from '../edit-variation-specifications/edit-variation-specifications.component';
+import { DeleteVariationSpecificationsComponent } from '../delete-variation-specifications/delete-variation-specifications.component';
 
 @Component({
   selector: 'app-create-variation-specifications',
@@ -18,7 +20,7 @@ export class CreateVariationSpecificationsComponent {
 
   specification_attribute_id: string = '';
   variations_attribute_id: string = '';
-  type_attribute_specification: number = 1;
+  type_attribute_specification: number = 2;
   type_attribute_variation: number = 3;
   attributes: any = [];
 
@@ -189,8 +191,35 @@ export class CreateVariationSpecificationsComponent {
     });
   }
 
+  editSpecification(specification: any) {
+    const modal = this.modalService.open(EditVariationSpecificationsComponent, {centered: true, size: 'md'});
+    modal.componentInstance.specification = specification;
+    modal.componentInstance.attributes_specifications = this.attributes_specifications;
+    
+    modal.componentInstance.EspecificationE.subscribe((edit: any) => {
+      console.log(edit);      
+      let INDEX = this.specifications.findIndex((item: any) => item.id == edit.specification.id);
+      if (INDEX != -1) {
+        this.specifications[INDEX] = edit.specification;
+      }
+    });
+  
+  }
+  deleteSpecification(specification: any) {
+    const modal = this.modalService.open(DeleteVariationSpecificationsComponent, {centered: true, size: 'md'});
+    modal.componentInstance.specification = specification;
+        
+    modal.componentInstance.EspecificationD.subscribe((res: any) => {
+      console.log(res);      
+      let INDEX = this.specifications.findIndex((item: any) => item.id == specification.id);
+      if (INDEX != -1) {
+        this.specifications.splice(INDEX, 1);
+      }
+    });
+  }
+
   getValueAttribute(attribute_special: any) {
-    console.log(attribute_special);      
+    // console.log(attribute_special);      
     if (attribute_special.propertie_id) {
       return attribute_special.propertie.name;
     }     
