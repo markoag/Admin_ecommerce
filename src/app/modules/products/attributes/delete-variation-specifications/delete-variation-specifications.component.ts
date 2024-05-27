@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 export class DeleteVariationSpecificationsComponent {
 
   @Input() specification: any;
+  @Input() is_variation: any;
+
   @Output() EspecificationD: EventEmitter<any> = new EventEmitter();
   isLoading: any;
 
@@ -25,8 +27,22 @@ export class DeleteVariationSpecificationsComponent {
   }
 
   delete() {
+    if (this.is_variation) {
+      this.deleteVariation();
+    } else {
+      this.deleteSpecification();
+    }
+  }
+  deleteSpecification() {
     this.attributeService.deleteSpecification(this.specification.id).subscribe((res: any) => {
       this.toastr.success('Éxito','Especificación eliminada correctamente');
+      this.EspecificationD.emit({message: 200});
+      this.modal.close();
+    });
+  }
+  deleteVariation() {
+    this.attributeService.deleteVariation(this.specification.id).subscribe((res: any) => {
+      this.toastr.success('Éxito','Variación eliminada correctamente');
       this.EspecificationD.emit({message: 200});
       this.modal.close();
     });

@@ -6,10 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-delete-brand',
   templateUrl: './delete-brand.component.html',
-  styleUrls: ['./delete-brand.component.scss']
+  styleUrls: ['./delete-brand.component.scss'],
 })
 export class DeleteBrandComponent {
-
   @Input() brand: any;
   @Output() BrandD: EventEmitter<any> = new EventEmitter();
   isLoading: any;
@@ -17,7 +16,7 @@ export class DeleteBrandComponent {
   constructor(
     public brandService: BrandService,
     private toastr: ToastrService,
-    public modal: NgbActiveModal,
+    public modal: NgbActiveModal
   ) {}
 
   ngOnInit(): void {
@@ -26,9 +25,13 @@ export class DeleteBrandComponent {
 
   delete() {
     this.brandService.deleteBrands(this.brand.id).subscribe((res: any) => {
-      this.toastr.success('Éxito','Marca eliminada correctamente');
-      this.BrandD.emit({message: 200});
-      this.modal.close();
+      if (res.message == 403) {
+        this.toastr.error('Validación', res.message_text);
+      } else {
+        this.toastr.success('Éxito', 'Marca eliminada correctamente');
+        this.BrandD.emit({ message: 200 });
+        this.modal.close();
+      }
     });
   }
 }

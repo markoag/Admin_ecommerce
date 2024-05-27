@@ -6,10 +6,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-delete-categorie',
   templateUrl: './delete-categorie.component.html',
-  styleUrls: ['./delete-categorie.component.scss']
+  styleUrls: ['./delete-categorie.component.scss'],
 })
 export class DeleteCategorieComponent {
-
   @Input() categorie: any;
   @Output() CategorieD: EventEmitter<any> = new EventEmitter();
   isLoading: any;
@@ -17,7 +16,7 @@ export class DeleteCategorieComponent {
   constructor(
     public categorieService: CategoriesService,
     private toastr: ToastrService,
-    public modal: NgbActiveModal,
+    public modal: NgbActiveModal
   ) {}
 
   ngOnInit(): void {
@@ -25,10 +24,16 @@ export class DeleteCategorieComponent {
   }
 
   delete() {
-    this.categorieService.deleteCategories(this.categorie.id).subscribe((res: any) => {
-      this.toastr.success('Éxito','Categoría eliminada correctamente');
-      this.CategorieD.emit({message: 200});
-      this.modal.close();
-    });
+    this.categorieService
+      .deleteCategories(this.categorie.id)
+      .subscribe((res: any) => {
+        if (res.message == 403) {
+          this.toastr.error('Validación', res.message_text);
+        } else {
+          this.toastr.success('Éxito', 'Categoría eliminada correctamente');
+          this.CategorieD.emit({ message: 200 });
+          this.modal.close();
+        }
+      });
   }
 }

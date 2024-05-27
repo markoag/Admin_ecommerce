@@ -26,9 +26,13 @@ export class DeleteAttributeComponent {
 
   delete() {
     this.attributeService.deleteAttributes(this.attribute.id).subscribe((res: any) => {
+      if (res.message == 403) {
+        this.toastr.error('Validación', res.message_text);
+      } else {
       this.toastr.success('Éxito','Atributo eliminado correctamente');
       this.AttributeD.emit({message: 200});
       this.modal.close();
+      }
     });
   }
 }

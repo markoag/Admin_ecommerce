@@ -125,7 +125,7 @@
           placeholder="xxxxxxx"
         />
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="!isShowMultiSelect">
+      <div class="col-lg-5 col-md-5 col-sm-12 my-2" *ngIf="!isShowMultiSelect">
         <label class="fw-semibold fs-6 py-2">Etiquetas: </label>
         <ng-multiselect-dropdown
           [placeholder]="'Selecciona tus etiquetas'"
@@ -136,6 +136,19 @@
           (onSelectAll)="onSelectAll($event)"
         >
         </ng-multiselect-dropdown>
+      </div>
+      <div class="col-3 col-md-3 col-sm-12 my-2">
+        <label class="fw-semibold fs-6 py-2 required">Selec. un Estado:</label>
+        <select
+          class="form-control form-select-solid fw-bolder"
+          name="state"
+          [(ngModel)]="state"
+          placeholder="Selec. Estado"
+        >
+          <option value="">--Seleccionar--</option>
+          <option value="1">Pendiente</option>
+          <option value="2">Público</option>
+        </select>
       </div>
     </div>
 
@@ -188,7 +201,9 @@
             </div>
           </div>
           <div class="col-4">
-            <button class="btn btn-primary btn-sm" (click)="addImagen()">+</button>
+            <button class="btn btn-primary btn-sm" (click)="addImagen()">
+              +
+            </button>
           </div>
           <div class="col-12">
             <div
@@ -234,15 +249,29 @@
         <label class="fs-6 fw-semibold mb-2">Descripción:</label>
         <ckeditor [data]="description" (change)="onChange($event)"></ckeditor>
       </div>
-      <div class="col-lg-8 fv-row fv-plugins-icon-container">
-        <label class="fs-6 fw-semibold mb-2">Resumen:</label>
-        <textarea
-          class="form-control form-control-solid"
-          rows="3"
-          name="summary"
-          placeholder="*********"
-          [(ngModel)]="summary"
-        ></textarea>
+      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+        <div class="row">
+          <div class="col-12">
+            <label class="fs-6 fw-semibold mb-2">Resumen:</label>
+            <textarea
+              class="form-control form-control-solid"
+              rows="3"
+              name="summary"
+              placeholder="*********"
+              [(ngModel)]="summary"
+            ></textarea>
+          </div>
+          <div class="col-12">
+            <label class="fs-6 fw-semibold mb-2">Stock:</label>
+            <input
+              type="number"
+              name="stock"
+              [(ngModel)]="stock"
+              class="form-control form-control-lg form-control-solid"
+              placeholder="100"
+            />
+          </div>
+        </div>
       </div>
     </div>
 

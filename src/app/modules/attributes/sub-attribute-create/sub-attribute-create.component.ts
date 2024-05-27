@@ -57,6 +57,9 @@ export class SubAttributeCreateComponent {
       }
       this.properties.unshift(res.propertie);
       this.toastr.success('Éxito','Propiedad creada correctamente');
+      this.name = '';
+      this.color = '';
+      this.type_action = 1;
       // this.modal.close();
     })
   }
