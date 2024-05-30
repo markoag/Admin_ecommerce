@@ -15,8 +15,20 @@
           placeholder="Promo Navideña"
         />
       </div>
+      <div class="col-lg-2 fv-row fv-plugins-icon-container">
+        <label class="fw-semibold fs-6 py-2 required">Estado:</label>
+        <select
+          class="form-control form-select-solid fw-bolder"
+          name="state"
+          [(ngModel)]="state"
+          placeholder="Selec. el estado"
+        >
+          <option value="1">Activo</option>
+          <option value="2">Inactivo</option>
+        </select>
+      </div>
       <div class="col-lg-6 fv-row fv-plugins-icon-container">
-        <label class="fw-semibold fs-6 py-2">Etiqueta: (Opcional)</label>
+        <label class="fw-semibold fs-6 py-2">Etiqueta:</label>
         <input
           type="text"
           name="label"
@@ -38,7 +50,7 @@
     </div>
     <div class="row mb-6">
       <div class="col-lg-6 col-md-6 col-sm-12 my-2">
-        <label class="form-label required fw-bold fs-6 mb-2"
+        <label class="form-label fw-semibold fs-6 py-2 required"
           >Sube tu imagen:</label
         >
         <div class="custom-file">
@@ -58,39 +70,70 @@
         </div>
       </div>
       <div class="col-lg-6 fv-row fv-plugins-icon-container">
-        <label class="fw-semibold fs-6 py-2">Link: (Opcional)</label>
-        <input
-          type="text"
-          name="link"
-          [(ngModel)]="link"
-          class="form-control form-control-lg form-control-solid"
-          placeholder="https://www.google.com"
-        />
+        <div class="row">
+          <div class="col-12">
+            <label class="fw-semibold fs-6 py-2">Link:</label>
+            <input
+              type="text"
+              name="link"
+              [(ngModel)]="link"
+              class="form-control form-control-lg form-control-solid"
+              placeholder="https://www.google.com"
+            />
+          </div>
+          <div class="col-12" *ngIf="type == 3">
+            <label for="etiqueta_especial" class="fw-semibold fs-6 py-2 required"
+              >Precio Original:
+            </label>
+            <input
+              class="form-control form-control-lg form-control-solid"
+              type="number"
+              id="original_price"
+              name="original_price"
+              placeholder="100"
+              [(ngModel)]="original_price"
+            />
+          </div>
+          <div class="col-12" *ngIf="type == 3">
+            <label for="etiqueta_especial" class="fw-semibold fs-6 py-2 required"
+              >Precio de Campaña:
+            </label>
+            <input
+              class="form-control form-control-lg form-control-solid"
+              type="number"
+              id="campaign_price"
+              name="campaign_price"
+              placeholder="50"
+              [(ngModel)]="campaign_price"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <div class="row mb-6">
-      <div class="col-lg-6 fv-row fv-plugins-icon-container">
-        <label for="etiqueta_especial" class="fw-bold fs-6 mb-2"
-          >Color: (Opcional)
+      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+        <label for="etiqueta_especial" class="fw-semibold fs-6 py-2"
+          >Color:
         </label>
         <input
-          class="form-control mb-3 mb-lg-0"
+          class="form-control form-control-lg form-control-solid"
           type="color"
           id="color"
           name="color"
           [(ngModel)]="color"
         />
       </div>
-      <div class="col-lg-4">
-        <label class="fw-semibold fs-6">Estado:(*)</label>
+      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+        <label class="fw-semibold fs-6 py-2 required">Selec. un Tipo</label>
         <select
           class="form-control form-select-solid fw-bolder"
-          name="state"
-          [(ngModel)]="state"
-          placeholder="Selec. el estado"
+          name="type"
+          placeholder="Secciona un tipo"
+          [(ngModel)]="type"
         >
-          <option value="1">Activo</option>
-          <option value="2">Inactivo</option>
+          <option value="1">Principal</option>
+          <option value="2">Banners</option>
+          <option value="3">Producto</option>          
         </select>
       </div>
     </div>

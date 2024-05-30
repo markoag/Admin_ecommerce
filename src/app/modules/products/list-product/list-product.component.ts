@@ -31,7 +31,7 @@ export class ListProductComponent {
   constructor(
     public productService: ProductService,
     public modalService: NgbModal,
-    private tastr: ToastrService
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class ListProductComponent {
   }
   configAll() {
     this.productService.configAll().subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       this.brands = res.brands;
       this.categories_first = res.categories_first;
       this.categories_seconds = res.categories_seconds;
@@ -60,12 +60,12 @@ export class ListProductComponent {
     this.productService
       .listProducts(data, page)
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         this.products = res.products.data;
         this.totalPages = res.total;
         this.currentPage = page;
       }, (err: any) => {
-        this.tastr.error("Api Response - Cominiquese con el sistema", err.error.message);
+        this.toastr.error("Api Response - Cominiquese con el sistema", err.error.message);
       });
   }
 

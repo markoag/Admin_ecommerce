@@ -35,7 +35,7 @@
                   (click)="changeTypeDiscount(1)"
                   name="type_discount"
                   value="1"
-                  checked="checked"
+                  [checked]="type_discount == 1"
                 />
               </span>
               <span class="ms-5">
@@ -58,6 +58,7 @@
                   (click)="changeTypeDiscount(2)"
                   name="type_discount"
                   value="2"
+                  [checked]="type_discount == 2"
                 />
               </span>
               <span class="ms-5">
@@ -68,7 +69,7 @@
         </div>
       </div>
       <div class="col-lg-3 fv-row fv-plugins-icon-container">
-        <label class="fw-semibold fs-6 py-2 required">Descuento:</label>
+        <label class="fw-semibold fs-6 py-2 required">Valor Descuento:</label>
         <input
           type="number"
           name="discount"
@@ -97,7 +98,7 @@
                   (click)="changeTypeCount(1)"
                   name="type_count"
                   value="1"
-                  checked="checked"
+                  [checked]="type_count == 1"
                 />
               </span>
               <span class="ms-5">
@@ -120,6 +121,7 @@
                   (click)="changeTypeCount(2)"
                   name="type_count"
                   value="2"
+                  [checked]="type_count == 2"
                 />
               </span>
               <span class="ms-5">
@@ -146,6 +148,7 @@
     <div class="row mb-6">
       <div class="col-4">
         <div class="row">
+          <label class="fw-semibold fs-6 py-1 required">Descuento a:</label>
           <div class="col-12 my-2">
             <label
               class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
@@ -161,7 +164,7 @@
                   (click)="changeTypeCoupon(1)"
                   name="type_coupon"
                   value="1"
-                  checked="checked"
+                  [checked]="type_coupon == 1"
                 />
               </span>
               <span class="ms-5">
@@ -184,6 +187,7 @@
                   (click)="changeTypeCoupon(2)"
                   name="type_coupon"
                   value="2"
+                  [checked]="type_coupon == 2"
                 />
               </span>
               <span class="ms-5">
@@ -206,6 +210,7 @@
                   (click)="changeTypeCoupon(3)"
                   name="type_coupon"
                   value="3"
+                  [checked]="type_coupon == 3"
                 />
               </span>
               <span class="ms-5">
@@ -219,8 +224,8 @@
         <div class="row">
           <div class="col-12" *ngIf="type_coupon == 1">
             <div class="row">
-              <div class="col-10">
-                <label class="fw-semibold fs-6 required">Productos:</label>
+              <div class="col-10 my-2">
+                <label class="fw-semibold fs-6 required mb-1">Productos:</label>
                 <select
                   class="form-control form-select-solid fw-bolder"
                   name="product_id"
@@ -233,15 +238,20 @@
                   </ng-container>
                 </select>
               </div>
-              <div class="col-2">
-                <button class="btn btn-sm btn-success mt-8" (click)="addProduct()">+</button>
+              <div class="col-2 my-2">
+                <button
+                  class="btn btn-sm btn-success mt-8"
+                  (click)="addProduct()"
+                >
+                  +
+                </button>
               </div>
             </div>
           </div>
           <div class="col-12" *ngIf="type_coupon == 2">
             <div class="row">
-              <div class="col-10">
-                <label class="fw-semibold fs-6 required"
+              <div class="col-10 my-2">
+                <label class="fw-semibold fs-6 required mb-1"
                   >Departamento: (Primer Nivel)</label
                 >
                 <select
@@ -256,15 +266,20 @@
                   </ng-container>
                 </select>
               </div>
-              <div class="col-2">
-                <button class="btn btn-sm btn-success mt-8" (click)="addCategory()">+</button>
+              <div class="col-2 my-2">
+                <button
+                  class="btn btn-sm btn-success mt-8"
+                  (click)="addCategory()"
+                >
+                  +
+                </button>
               </div>
             </div>
           </div>
           <div class="col-12" *ngIf="type_coupon == 3">
             <div class="row">
-              <div class="col-10">
-                <label class="fw-semibold fs-6 required">Marcas:</label>
+              <div class="col-10 my-2">
+                <label class="fw-semibold fs-6 required mb-1">Marcas:</label>
                 <select
                   class="form-control form-select-solid fw-bolder"
                   name="brand_id"
@@ -277,8 +292,13 @@
                   </ng-container>
                 </select>
               </div>
-              <div class="col-2">
-                <button class="btn btn-sm btn-success mt-8" (click)="addBrand()">+</button>
+              <div class="col-2 my-2">
+                <button
+                  class="btn btn-sm btn-success mt-8"
+                  (click)="addBrand()"
+                >
+                  +
+                </button>
               </div>
             </div>
           </div>
@@ -375,7 +395,7 @@
                   id="kt_advance_table_widget_1"
                 >
                   <thead>
-                    <tr class="text-left">                      
+                    <tr class="text-left">
                       <th>NOMBRE DE LA MARCA</th>
                       <th>ACCIÓN</th>
                     </tr>

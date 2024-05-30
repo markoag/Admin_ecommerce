@@ -8,18 +8,20 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./create-sliders.component.scss'],
 })
 export class CreateSlidersComponent {
-  
   title: string = '';
   label: string = '';
   subtitle: string = '';
   link: string = '';
   color: string = '';
-  
+
   img_preview: string =
     'https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2.svg';
   file_image: any = null;
+  type: any = 1;
+  original_price: any = null;
+  campaign_price: any = null;
 
-  isLoading$: any;  
+  isLoading$: any;
 
   constructor(
     public sliderService: SlidersService,
@@ -57,25 +59,38 @@ export class CreateSlidersComponent {
       this.toastr.error('Validación', 'Los campos con * son obligatorios');
       return;
     }
-    
+    if (this.type == 3 && !this.original_price || !this.campaign_price) {
+      this.toastr.error(
+        'Validación',
+        'Los campos de precio original y precio de campaña son obligatorios'
+      );
+      return;
+    }
 
     let formData = new FormData();
     formData.append('title', this.title);
     if (this.label) {
       formData.append('label', this.label);
     }
-    formData.append('subtitle', this.subtitle);    
+    formData.append('subtitle', this.subtitle);
     formData.append('imagen', this.file_image);
+    formData.append('type', this.type);
+    if (this.original_price) {
+      formData.append('original_price', this.original_price);
+    }
+    if (this.campaign_price) {
+      formData.append('campaign_price', this.campaign_price);
+    }
     if (this.link) {
-      formData.append('link', this.link);    
+      formData.append('link', this.link);
     }
     if (this.color) {
-      formData.append('color', this.color);    
+      formData.append('color', this.color);
     }
-    
+
     this.sliderService.createSliders(formData).subscribe((res: any) => {
       console.log(res);
-      
+
       // Limpiar campos
       this.title = '';
       this.label = '';
@@ -85,9 +100,11 @@ export class CreateSlidersComponent {
       this.file_image = null;
       this.img_preview =
         'https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2.svg';
+      this.type = 1;
+      this.original_price = null;
+      this.campaign_price = null;
 
-
-      this.toastr.success('Éxito','Slider creado correctamente');
+      this.toastr.success('Éxito', 'Slider creado correctamente');
     });
   }
 }

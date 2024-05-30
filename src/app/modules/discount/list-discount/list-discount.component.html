@@ -9,8 +9,8 @@
     <div class="card-title">
       <!--begin::Search-->
       <div class="d-flex align-items-center position-relative my-1">
-        <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
-          <span class="path1"></span><span class="path2"></span
+        <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"
+          ><span class="path1"></span><span class="path2"></span
         ></i>
         <input
           type="text"
@@ -18,66 +18,28 @@
           [(ngModel)]="search"
           data-kt-user-table-filter="search"
           class="form-control form-control-solid w-250px ps-13"
-          placeholder="Buscar Productos"
+          placeholder="Buscar campaña de descuento"
         />
       </div>
       <div class="row px-7 py-5">
-        <div class="col-3">
-          <select
-            class="form-control form-select-solid fw-bolder"
-            name="brand"
-            placeholder="Selec. Marca"
-            [(ngModel)]="brand_id"
-          >
-            <option value="">Selec. Marcas</option>
-            <ng-container *ngFor="let item of brands">
-              <option [value]="item.id">{{ item.name }}</option>
-            </ng-container>
-          </select>
+        <div class="col-4">
+          <div class="input-group input-group-solid">
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid"
+              [(ngModel)]="start_date"
+            />
+          </div>
         </div>
-        <div class="col-3">
-          <select
-            class="form-control form-select-solid fw-bolder"
-            name="departament"
-            placeholder="Selec. Departamento"
-            [(ngModel)]="categorie_first_id"
-            (change)="changeDepartament()"
-          >
-            <option value="">Selec. Departamento</option>
-            <ng-container *ngFor="let item of categories_first">
-              <option [value]="item.id">{{ item.name }}</option>
-            </ng-container>
-          </select>
+        <div class="col-4">
+          <div class="input-group input-group-solid">
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid"
+              [(ngModel)]="end_date"
+            />
+          </div>
         </div>
-        <div class="col-3">
-          <select
-            class="form-control form-select-solid fw-bolder"
-            name="categorie"
-            placeholder="Selec. Categoria"
-            [(ngModel)]="categorie_second_id"
-            (change)="changeCategorie()"
-          >
-            <option value="">Selec. Categoria</option>
-            <ng-container *ngFor="let item of categories_seconds_backups">
-              <option [value]="item.id">{{ item.name }}</option>
-            </ng-container>
-          </select>
-        </div>
-        <div class="col-3">
-          <select
-            class="form-control form-select-solid fw-bolder"
-            name="categorie"
-            placeholder="Selec. Categoria"
-            [(ngModel)]="categorie_third_id"
-          >
-            <option value="">Selec. Subcategoria</option>
-            <ng-container *ngFor="let item of categories_thirds_backups">
-              <option [value]="item.id">{{ item.name }}</option>
-            </ng-container>
-          </select>
-        </div>
-      </div>
-      <div class="row px-7 py-5">
         <div class="col-4">
           <div class="input-group input-group-solid">
             <a (click)="searchTo()" class="btn btn-dark mx-2"> Buscar </a>
@@ -93,9 +55,17 @@
       <!--begin::Toolbar-->
       <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
         <!--begin::Filter-->
-        <!-- <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <i class="ki-duotone ki-filter fs-2"><span class="path1"></span><span class="path2"></span></i>        Filter
-                        </button> -->
+        <!-- <button
+            type="button"
+            class="btn btn-light-primary me-3"
+            data-kt-menu-trigger="click"
+            data-kt-menu-placement="bottom-end"
+          >
+            <i class="ki-duotone ki-filter fs-2"
+              ><span class="path1"></span><span class="path2"></span
+            ></i>
+            Filter
+          </button> -->
         <!--begin::Menu 1-->
         <div
           class="menu menu-sub menu-sub-dropdown w-300px w-md-325px"
@@ -123,12 +93,12 @@
                 data-allow-clear="true"
                 data-kt-user-table-filter="role"
                 data-hide-search="true"
-                data-select2-id="select2-data-9-luti"
+                data-select2-id="select2-data-9-use5"
                 tabindex="-1"
                 aria-hidden="true"
                 data-kt-initialized="1"
               >
-                <option data-select2-id="select2-data-11-bbrq"></option>
+                <option data-select2-id="select2-data-11-clab"></option>
                 <option value="Administrator">Administrator</option>
                 <option value="Analyst">Analyst</option>
                 <option value="Developer">Developer</option>
@@ -137,7 +107,7 @@
               ><span
                 class="select2 select2-container select2-container--bootstrap5"
                 dir="ltr"
-                data-select2-id="select2-data-10-4cpl"
+                data-select2-id="select2-data-10-a8xk"
                 style="width: 100%"
                 ><span class="selection"
                   ><span
@@ -147,11 +117,11 @@
                     aria-expanded="false"
                     tabindex="0"
                     aria-disabled="false"
-                    aria-labelledby="select2-n6kk-container"
-                    aria-controls="select2-n6kk-container"
+                    aria-labelledby="select2-jeaj-container"
+                    aria-controls="select2-jeaj-container"
                     ><span
                       class="select2-selection__rendered"
-                      id="select2-n6kk-container"
+                      id="select2-jeaj-container"
                       role="textbox"
                       aria-readonly="true"
                       title="Select option"
@@ -177,17 +147,17 @@
                 data-allow-clear="true"
                 data-kt-user-table-filter="two-step"
                 data-hide-search="true"
-                data-select2-id="select2-data-12-cr6q"
+                data-select2-id="select2-data-12-zrhr"
                 tabindex="-1"
                 aria-hidden="true"
                 data-kt-initialized="1"
               >
-                <option data-select2-id="select2-data-14-2pp3"></option>
+                <option data-select2-id="select2-data-14-i1c5"></option>
                 <option value="Enabled">Enabled</option></select
               ><span
                 class="select2 select2-container select2-container--bootstrap5"
                 dir="ltr"
-                data-select2-id="select2-data-13-3y7a"
+                data-select2-id="select2-data-13-l2pm"
                 style="width: 100%"
                 ><span class="selection"
                   ><span
@@ -197,11 +167,11 @@
                     aria-expanded="false"
                     tabindex="0"
                     aria-disabled="false"
-                    aria-labelledby="select2-oer2-container"
-                    aria-controls="select2-oer2-container"
+                    aria-labelledby="select2-xmwz-container"
+                    aria-controls="select2-xmwz-container"
                     ><span
                       class="select2-selection__rendered"
-                      id="select2-oer2-container"
+                      id="select2-xmwz-container"
                       role="textbox"
                       aria-readonly="true"
                       title="Select option"
@@ -242,192 +212,163 @@
         <!--end::Filter-->
 
         <!--begin::Add user-->
-        <a routerLink="/productos/registro" class="btn btn-primary">
-          <i class="ki-duotone ki-plus fs-2"></i> Add Producto
+        <a routerLink="/descuentos/registro" class="btn btn-primary">
+          <i class="ki-duotone ki-plus fs-2"></i> Add Descuento
         </a>
         <!--end::Add user-->
       </div>
-      <!--end::Card toolbar-->
     </div>
-    <!--begin::Card title-->
+    <!--end::Card toolbar-->
   </div>
   <!--end::Card header-->
 
   <!--begin::Card body-->
   <div class="card-body py-4">
+    <!--begin::Table-->
     <div
       id="kt_table_users_wrapper"
       class="dt-container dt-bootstrap5 dt-empty-footer"
     >
-      <div class="table-responsive">
+      <div id="" class="table-responsive">
         <table
-          class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
+          class="table align-middle table-row-dashed fs-6 gy-5 dataTable"
           id="kt_table_users"
         >
           <thead>
-            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+            <tr
+              class="text-start text-muted fw-bold fs-7 text-uppercase gs-0"
+              role="row"
+            >
               <th
-                class="min-w-125px sorting"
-                tabindex="0"
-                aria-controls="kt_table_users"
+                class="min-w-125px dt-orderable-asc dt-orderable-desc"
+                data-dt-column="1"
                 rowspan="1"
                 colspan="1"
-                aria-label="User: activate to sort column ascending"
-                style="width: 275.844px"
+                aria-label="User: Activate to sort"
+                tabindex="0"
               >
-                Titulo
+                <span class="dt-column-title" role="button">Código</span
+                ><span class="dt-column-order"></span>
               </th>
               <th
-                class="min-w-125px sorting"
-                tabindex="0"
-                aria-controls="kt_table_users"
+                class="min-w-125px dt-orderable-asc dt-orderable-desc"
+                data-dt-column="1"
                 rowspan="1"
                 colspan="1"
-                aria-label="Joined Date: activate to sort column ascending"
-                style="width: 214.609px"
+                aria-label="User: Activate to sort"
+                tabindex="0"
               >
-                Precios
+                <span class="dt-column-title" role="button">Fechas</span
+                ><span class="dt-column-order"></span>
               </th>
               <th
-                class="min-w-125px sorting"
-                tabindex="0"
-                aria-controls="kt_table_users"
+                class="min-w-125px dt-orderable-asc dt-orderable-desc"
+                data-dt-column="3"
                 rowspan="1"
                 colspan="1"
-                aria-label="Role: activate to sort column ascending"
-                style="width: 161.469px"
+                aria-label="Last login: Activate to sort"
+                tabindex="0"
               >
-                Marca
+                <span class="dt-column-title" role="button">Estado</span
+                ><span class="dt-column-order"></span>
               </th>
               <th
-                class="min-w-125px sorting"
-                tabindex="0"
-                aria-controls="kt_table_users"
+                class="min-w-125px dt-orderable-asc dt-orderable-desc"
+                data-dt-column="4"
                 rowspan="1"
                 colspan="1"
-                aria-label="Role: activate to sort column ascending"
-                style="width: 161.469px"
+                aria-label="Two-step : Activate to sort"
+                tabindex="0"
               >
-                Departamento
+                <span class="dt-column-title" role="button"
+                  >Tipo de Descuento</span
+                ><span class="dt-column-order"></span>
               </th>
               <th
-                class="min-w-125px sorting"
-                tabindex="0"
-                aria-controls="kt_table_users"
+                class="min-w-125px dt-orderable-asc dt-orderable-desc"
+                data-dt-column="4"
                 rowspan="1"
                 colspan="1"
-                aria-label="Role: activate to sort column ascending"
-                style="width: 161.469px"
+                aria-label="Two-step : Activate to sort"
+                tabindex="0"
               >
-                Categoria
+                <span class="dt-column-title" role="button"
+                  >Tipo de Campaña</span
+                ><span class="dt-column-order"></span>
               </th>
               <th
-                class="min-w-125px sorting"
-                tabindex="0"
-                aria-controls="kt_table_users"
+                class="min-w-125px dt-orderable-asc dt-orderable-desc"
+                data-dt-column="5"
                 rowspan="1"
                 colspan="1"
-                aria-label="Role: activate to sort column ascending"
-                style="width: 161.469px"
-              >
-                Subcategoria
-              </th>
-              <th
-                class="min-w-125px sorting"
+                aria-label="Joined Date: Activate to sort"
                 tabindex="0"
-                aria-controls="kt_table_users"
-                rowspan="1"
-                colspan="1"
-                aria-label="Last login: activate to sort column ascending"
-                style="width: 161.469px"
               >
-                State
+                <span class="dt-column-title" role="button">Descuento</span
+                ><span class="dt-column-order"></span>
               </th>
               <th
-                class="text-end min-w-100px sorting_disabled"
+                class="text-end min-w-100px dt-orderable-none"
+                data-dt-column="6"
                 rowspan="1"
                 colspan="1"
                 aria-label="Actions"
-                style="width: 129.75px"
               >
-                Actions
+                <span class="dt-column-title">Acciones</span
+                ><span class="dt-column-order"></span>
               </th>
             </tr>
           </thead>
           <tbody class="text-gray-600 fw-semibold">
-            <ng-container *ngFor="let product of products">
-              <tr class="odd">
+            <ng-container *ngFor="let discount of discounts">
+              <tr>
                 <td>
-                  <div class="d-flex align-items-center">
-                    <div class="symbol symbol-50px me-5" *ngIf="product.image">
-                      <img [src]="product.image" class="" alt="" />
-                    </div>
-
-                    <div class="d-flex justify-content-start flex-column">
-                      <a
-                        href="#"
-                        class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6"
-                        >{{ product.title }}</a
-                      >
-                      <span
-                        class="text-muted fw-semibold text-muted d-block fs-7"
-                        >{{ product.sku }}</span
-                      >
-                    </div>
-                  </div>
+                  {{ discount.code }}
                 </td>
-                <td>
-                  <span>
-                    $ {{ product.price_pvp }} / $ {{ product.price_desc }}
-                  </span>
-                </td>
-                <td>
-                  <span>
-                    {{ product.brand.name }}
-                  </span>
-                </td>
-                <td>
-                  <span>
-                    {{ product.categorie_first.name }}
-                  </span>
-                </td>
-                <td>
-                  <span *ngIf="product.categorie_second">
-                    {{ product.categorie_second.name }}
-                  </span>
-                </td>
-                <td>
-                  <span *ngIf="product.categorie_third">
-                    {{ product.categorie_third.name }}
-                  </span>
-                </td>
+                <td>{{ discount.start_date }} / {{ discount.end_date }}</td>
                 <td>
                   <span
-                    class="badge badge-light-warning fs-7 fw-bold"
-                    *ngIf="product.state == 1"
-                    >PENDIENTE</span
+                    class="badge badge-light-primary fs-7 fw-bold"
+                    *ngIf="discount.state == 1"
+                    >Activo</span
                   >
                   <span
-                    class="badge badge-light-success fs-7 fw-bold"
-                    *ngIf="product.state == 2"
-                    >PUBLICO</span
+                    class="badge badge-light-danger fs-7 fw-bold"
+                    *ngIf="discount.state == 2"
+                    >Inactivo</span
                   >
                 </td>
-
+                <td>
+                  <span>
+                    {{ getNameTypeDiscount(discount.discount_type) }}
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    {{ getNameTypeCampaign(discount.type_campaign) }}
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    {{ discount.discount }}
+                    {{ discount.type_discount == 1 ? "%" : "$" }}
+                  </span>
+                </td>
                 <td class="text-end">
                   <a
-                    [routerLink]="
-                      '/productos/listar/variacion-especificacion/' + product.id
-                    "
+                    href="#"
+                    onclick="return false"
+                    (click)="copyLink(discount)"
+                    *ngIf="discount.type_campaign == 3"
+                    ngbTooltip="Copiar enlace"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   >
-                    <i class="ki-duotone ki-delivery-3 fs-2"
+                    <i class="ki-duotone ki-save-2 fs-2 mx-1"
                       ><span class="path1"></span><span class="path2"></span
-                      ><span class="path3"></span
                     ></i>
                   </a>
                   <a
-                    [routerLink]="'/productos/listar/editar/' + product.id"
+                    [routerLink]="'/descuentos/listar/editar/' + discount.id"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   >
                     <i class="ki-duotone ki-pencil fs-2"
@@ -435,9 +376,8 @@
                     ></i>
                   </a>
                   <a
-                    href="#"
-                    onclick="return false;"
-                    (click)="deleteProduct(product)"
+                    onclick="return false"
+                    (click)="deleteDiscount(discount)"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                   >
                     <i class="ki-duotone ki-trash fs-2"
@@ -450,16 +390,19 @@
               </tr>
             </ng-container>
           </tbody>
+          <tfoot></tfoot>
         </table>
         <ngb-pagination
           [collectionSize]="totalPages"
           [(page)]="currentPage"
-          [pageSize]="25"
+          [pageSize]="10"
           [rotate]="true"
           [boundaryLinks]="true"
           (pageChange)="loadPage($event)"
         ></ngb-pagination>
       </div>
     </div>
+    <!--end::Table-->
   </div>
+  <!--end::Card body-->
 </div>

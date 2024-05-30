@@ -1,26 +1,22 @@
 import { Component } from '@angular/core';
-import { CouponService } from '../service/coupon.service';
+import { DiscountService } from '../service/discount.service';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-edit-coupon',
-  templateUrl: './edit-coupon.component.html',
-  styleUrls: ['./edit-coupon.component.scss'],
+  selector: 'app-create-discount',
+  templateUrl: './create-discount.component.html',
+  styleUrls: ['./create-discount.component.scss'],
 })
-export class EditCouponComponent {
-  code: string = '';
+export class CreateDiscountComponent {
   type_discount: number = 1;
   discount: number = 0;
-  type_count: number = 1;
-  num_use: number = 0;
-  type_coupon: number = 1;
+  type_campaign: number = 1;
+  discount_type: number = 1;
   product_id: any;
   categorie_id: any;
   brand_id: any;
-  state: number = 1;
-  COUPON_ID: string = '';
-  COUPON: any = null;
+  start_date: any;
+  end_date: any;
 
   isLoading$: any;
 
@@ -32,59 +28,31 @@ export class EditCouponComponent {
   brands_add: any = [];
 
   constructor(
-    public couponService: CouponService,
-    private toastr: ToastrService,
-    public activeRoute: ActivatedRoute
+    public discountService: DiscountService,
+    private toastr: ToastrService
   ) {}
 
-  ngOnInit(): void {
-    this.isLoading$ = this.couponService.isLoading$;
+  ngOnInit() {
+    this.isLoading$ = this.discountService.isLoading$;
     this.config();
-
-    this.activeRoute.params.subscribe((res: any) => {
-      this.COUPON_ID = res.id;
-    });
-
-    this.couponService.showCoupon(this.COUPON_ID).subscribe((res: any) => {
-      // console.log(res);
-      this.COUPON = res.coupon;
-      this.code = res.coupon.code;
-      this.type_discount = res.coupon.type_discount;
-      this.discount = res.coupon.discount;
-      this.type_count = res.coupon.type_count;
-      this.num_use = res.coupon.num_use;
-      this.type_coupon = res.coupon.type_coupon;
-      this.state = res.coupon.state;
-      this.products_add = res.coupon.products;
-      this.categories_add = res.coupon.categories;
-      this.brands_add = res.coupon.brands;
-    });
   }
 
   config() {
-    this.couponService.configCoupons().subscribe((res: any) => {
+    this.discountService.configDiscounts().subscribe((res: any) => {
       this.products = res.products;
       this.categories_first = res.categories;
       this.brands = res.brands;
     });
   }
 
-  isLoadingView() {
-    this.couponService.isLoadingSubject.next(true);
-    setTimeout(() => {
-      this.couponService.isLoadingSubject.next(false);
-    }, 50);
-  }
-
   changeTypeDiscount(value: number) {
     this.type_discount = value;
   }
-  changeTypeCount(value: number) {
-    this.type_count = value;
-    this.num_use = 0;
+  changeTypeCampaign(value: number) {
+    this.type_campaign = value;
   }
   changeTypeCoupon(value: number) {
-    this.type_coupon = value;
+    this.discount_type = value;
     this.products_add = [];
     this.categories_add = [];
     this.brands_add = [];
@@ -95,62 +63,60 @@ export class EditCouponComponent {
 
   save() {
     // VALIDACIONES
-    if (!this.code || !this.discount) {
-      this.toastr.error('Validación', 'Debe completar todos los campos');
+    if (!this.discount || !this.start_date || !this.end_date) {
+      this.toastr.error('Validación', 'Debe completar todos los campos requeridos');
       return;
     }
     if (this.type_discount == 1 && this.discount > 50) {
       this.toastr.error('Validación', 'El descuento no puede ser mayor al 50%');
       return;
     }
-    if (this.type_count == 2 && this.num_use == 0) {
-      this.toastr.error(
-        'Validación',
-        'Debe ingresar la cantidad de usos para el cupón'
-      );
-      return;
-    }
-    if (this.type_coupon == 1 && this.products_add.length == 0) {
+    if (this.discount_type == 1 && this.products_add.length == 0) {
       this.toastr.error('Validación', 'Debe seleccionar al menos un producto');
       return;
     }
-    if (this.type_coupon == 2 && this.categories_add.length == 0) {
+    if (this.discount_type == 2 && this.categories_add.length == 0) {
       this.toastr.error(
         'Validación',
         'Debe seleccionar al menos una categoría'
       );
       return;
     }
-    if (this.type_coupon == 3 && this.brands_add.length == 0) {
+    if (this.discount_type == 3 && this.brands_add.length == 0) {
       this.toastr.error('Validación', 'Debe seleccionar al menos una marca');
       return;
     }
 
     let data = {
-      code: this.code,
       type_discount: this.type_discount,
       discount: this.discount,
-      type_count: this.type_count,
-      num_use: this.num_use,
-      state: this.state,
-      type_coupon: this.type_coupon,
+      discount_type: this.discount_type,
       product_selected: this.products_add,
       categorie_selected: this.categories_add,
       brand_selected: this.brands_add,
+      start_date: this.start_date,
+      end_date: this.end_date,
+      type_campaign: this.type_campaign,
     };
 
-    this.couponService
-      .updateCoupons(this.COUPON_ID, data)
-      .subscribe((res: any) => {
-        console.log(res);
-        if (res.message == 403) {
-          this.toastr.error('Validación', res.message_text);
-          return;
-        }
-
-        this.toastr.success('Éxito', 'Cupón actualizado correctamente');
-        this.config();
-      });
+    this.discountService.createDiscounts(data).subscribe((res: any) => {
+      console.log(res);
+      if (res.message == 403) {
+        this.toastr.error('Validación', res.message_text);
+      } else {
+        this.toastr.success('Éxito', 'Campaña de descuento creada correctamente');
+        // Limpiar formulario
+        this.type_discount = 1;
+        this.discount = 0;
+        this.discount_type = 1;        
+        this.type_campaign = 1;
+        this.start_date = '';
+        this.end_date = '';
+        this.products_add = [];
+        this.categories_add = [];
+        this.brands_add = [];
+      }
+    });
   }
 
   addProduct() {

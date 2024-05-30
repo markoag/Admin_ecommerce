@@ -156,9 +156,10 @@ export const environment = {
       'thumbnail': './assets/media/demos/demo20.png'
     },
   },
-  URL_BACKEND: 'http://127.0.0.1:8000/',
-  URL_SERVICIOS: 'http://127.0.0.1:8000/api',
-  URL_FROTEND: 'http://localhost:4200',
+  URL_BACKEND: 'http://taztingo.ec.com/',
+  URL_SERVICIOS: 'http://taztingo.ec.com/api',
+  URL_FROTEND: 'http://taztingo.ec.com',
+  URL_TIENDA: 'http://tienda.taztingo.ec.com',
 };
 
 /*

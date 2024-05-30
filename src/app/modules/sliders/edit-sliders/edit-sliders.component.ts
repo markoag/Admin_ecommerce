@@ -19,6 +19,9 @@ export class EditSlidersComponent {
   img_preview: string =
     'https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2.svg';
   file_image: any = null;
+  type: any = 1;
+  original_price: any = null;
+  campaign_price: any = null;
 
   isLoading$: any;
   slider_id: string = '';
@@ -40,10 +43,13 @@ export class EditSlidersComponent {
 
       this.title = res.slider.title;
       this.label = res.slider.label;
+      this.type = res.slider.type;
       this.subtitle = res.slider.subtitle;
       this.link = res.slider.link;
       this.color = res.slider.color;
       this.state = res.slider.state;
+      this.original_price = res.slider.original_price;
+      this.campaign_price = res.slider.campaign_price;
       this.img_preview = res.slider.image;
     });
   }
@@ -75,6 +81,13 @@ export class EditSlidersComponent {
       this.toastr.error('Validación', 'Los campos con * son obligatorios');
       return;
     }
+    if (this.type == 3 && !this.original_price || !this.campaign_price) {
+      this.toastr.error(
+        'Validación',
+        'Los campos de precio original y precio de campaña son obligatorios'
+      );
+      return;
+    }
 
     let formData = new FormData();
     formData.append('title', this.title);
@@ -84,6 +97,13 @@ export class EditSlidersComponent {
     formData.append('subtitle', this.subtitle);
     if (this.file_image) {
       formData.append('imagen', this.file_image);
+    }
+    formData.append('type', this.type);
+    if (this.original_price) {
+      formData.append('original_price', this.original_price);
+    }
+    if (this.campaign_price) {
+      formData.append('campaign_price', this.campaign_price);
     }
     if (this.link) {
       formData.append('link', this.link);

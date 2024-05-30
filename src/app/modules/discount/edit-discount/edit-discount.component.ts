@@ -1,26 +1,30 @@
 import { Component } from '@angular/core';
-import { CouponService } from '../service/coupon.service';
+import { DiscountService } from '../service/discount.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { URL_TIENDA } from 'src/app/config/config';
 
 @Component({
-  selector: 'app-edit-coupon',
-  templateUrl: './edit-coupon.component.html',
-  styleUrls: ['./edit-coupon.component.scss'],
+  selector: 'app-edit-discount',
+  templateUrl: './edit-discount.component.html',
+  styleUrls: ['./edit-discount.component.scss']
 })
-export class EditCouponComponent {
+export class EditDiscountComponent {
+
   code: string = '';
   type_discount: number = 1;
-  discount: number = 0;
-  type_count: number = 1;
-  num_use: number = 0;
-  type_coupon: number = 1;
+  discount: number = 0;  
+  type_campaign: number = 1;
+  discount_type: number = 1;
   product_id: any;
   categorie_id: any;
   brand_id: any;
   state: number = 1;
-  COUPON_ID: string = '';
-  COUPON: any = null;
+  start_date: any;
+  end_date: any;
+
+  DISCOUNT_ID: string = '';
+  DISCOUNT: any = null;
 
   isLoading$: any;
 
@@ -32,37 +36,38 @@ export class EditCouponComponent {
   brands_add: any = [];
 
   constructor(
-    public couponService: CouponService,
+    public discountService: DiscountService,
     private toastr: ToastrService,
     public activeRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.isLoading$ = this.couponService.isLoading$;
+    this.isLoading$ = this.discountService.isLoading$;
     this.config();
 
     this.activeRoute.params.subscribe((res: any) => {
-      this.COUPON_ID = res.id;
+      this.DISCOUNT_ID = res.id;
     });
 
-    this.couponService.showCoupon(this.COUPON_ID).subscribe((res: any) => {
-      // console.log(res);
-      this.COUPON = res.coupon;
-      this.code = res.coupon.code;
-      this.type_discount = res.coupon.type_discount;
-      this.discount = res.coupon.discount;
-      this.type_count = res.coupon.type_count;
-      this.num_use = res.coupon.num_use;
-      this.type_coupon = res.coupon.type_coupon;
-      this.state = res.coupon.state;
-      this.products_add = res.coupon.products;
-      this.categories_add = res.coupon.categories;
-      this.brands_add = res.coupon.brands;
+    this.discountService.showDiscount(this.DISCOUNT_ID).subscribe((res: any) => {
+      console.log(res);
+      this.DISCOUNT = res.discount;
+      this.code = res.discount.code;
+      this.type_discount = res.discount.type_discount;
+      this.discount = res.discount.discount;
+      this.type_campaign = res.discount.type_campaign;
+      this.start_date = res.discount.start_date;
+      this.end_date = res.discount.end_date;
+      this.discount_type = res.discount.discount_type;
+      this.state = res.discount.state;
+      this.products_add = res.discount.products;
+      this.categories_add = res.discount.categories;
+      this.brands_add = res.discount.brands;
     });
   }
 
   config() {
-    this.couponService.configCoupons().subscribe((res: any) => {
+    this.discountService.configDiscounts().subscribe((res: any) => {
       this.products = res.products;
       this.categories_first = res.categories;
       this.brands = res.brands;
@@ -70,27 +75,36 @@ export class EditCouponComponent {
   }
 
   isLoadingView() {
-    this.couponService.isLoadingSubject.next(true);
+    this.discountService.isLoadingSubject.next(true);
     setTimeout(() => {
-      this.couponService.isLoadingSubject.next(false);
+      this.discountService.isLoadingSubject.next(false);
     }, 50);
   }
 
   changeTypeDiscount(value: number) {
     this.type_discount = value;
-  }
-  changeTypeCount(value: number) {
-    this.type_count = value;
-    this.num_use = 0;
+  }  
+  changeTypeCampaign(value: number) {
+    this.type_campaign = value;
   }
   changeTypeCoupon(value: number) {
-    this.type_coupon = value;
+    this.discount_type = value;
     this.products_add = [];
     this.categories_add = [];
     this.brands_add = [];
     this.product_id = '';
     this.categorie_id = '';
     this.brand_id = '';
+  }
+
+  copyLink(product: any) {
+    var aux = document.createElement('input');
+    aux.setAttribute('value', URL_TIENDA+"/productos/"+product.sku+"?descuentos="+this.DISCOUNT.code);
+    document.body.appendChild(aux);
+    aux.select();
+    document.execCommand('copy');
+    document.body.removeChild(aux);
+    this.toastr.info('Link copiado al portapapeles');
   }
 
   save() {
@@ -102,26 +116,19 @@ export class EditCouponComponent {
     if (this.type_discount == 1 && this.discount > 50) {
       this.toastr.error('Validación', 'El descuento no puede ser mayor al 50%');
       return;
-    }
-    if (this.type_count == 2 && this.num_use == 0) {
-      this.toastr.error(
-        'Validación',
-        'Debe ingresar la cantidad de usos para el cupón'
-      );
-      return;
-    }
-    if (this.type_coupon == 1 && this.products_add.length == 0) {
+    }    
+    if (this.discount_type == 1 && this.products_add.length == 0) {
       this.toastr.error('Validación', 'Debe seleccionar al menos un producto');
       return;
     }
-    if (this.type_coupon == 2 && this.categories_add.length == 0) {
+    if (this.discount_type == 2 && this.categories_add.length == 0) {
       this.toastr.error(
         'Validación',
         'Debe seleccionar al menos una categoría'
       );
       return;
     }
-    if (this.type_coupon == 3 && this.brands_add.length == 0) {
+    if (this.discount_type == 3 && this.brands_add.length == 0) {
       this.toastr.error('Validación', 'Debe seleccionar al menos una marca');
       return;
     }
@@ -130,25 +137,27 @@ export class EditCouponComponent {
       code: this.code,
       type_discount: this.type_discount,
       discount: this.discount,
-      type_count: this.type_count,
-      num_use: this.num_use,
+      type_campaign: this.type_campaign,
+      start_date: this.start_date,
+      end_date: this.end_date,      
       state: this.state,
-      type_coupon: this.type_coupon,
+      discount_type: this.discount_type,
       product_selected: this.products_add,
       categorie_selected: this.categories_add,
       brand_selected: this.brands_add,
     };
 
-    this.couponService
-      .updateCoupons(this.COUPON_ID, data)
+    this.discountService
+      .updateDiscounts(this.DISCOUNT_ID, data)
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
+
         if (res.message == 403) {
           this.toastr.error('Validación', res.message_text);
           return;
         }
 
-        this.toastr.success('Éxito', 'Cupón actualizado correctamente');
+        this.toastr.success('Éxito', 'Campaña de descuento actualizada correctamente');
         this.config();
       });
   }

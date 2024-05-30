@@ -5,15 +5,79 @@
   ></span>
   <div class="card-body border-top p-9">
     <div class="row mb-6">
-      <div class="col-lg-5 fv-row fv-plugins-icon-container">
-        <label class="fw-semibold fs-6 py-2 required">Código del Cupón:</label>
-        <input
-          type="text"
-          name="code"
-          [(ngModel)]="code"
-          class="form-control form-control-lg form-control-solid"
-          placeholder="Cupón de descuento por lanzamiento de tienda online"
-        />
+      <div class="col-lg-4 fv-row fv-plugins-icon-container">
+        <div class="row">
+          <label class="fw-semibold fs-6 py-1 required">Tipo de Campaña:</label>
+          <div class="col-12 my-2">
+            <label
+              class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+              [ngClass]="{ active: type_campaign == 1 }"
+              t-button="true"
+            >
+              <span
+                class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1"
+              >
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  (click)="changeTypeCampaign(1)"
+                  name="type_campaign"
+                  value="1"
+                  [checked]="type_campaign == 1"
+                />
+              </span>
+              <span class="ms-5">
+                <span class="fs-6 fw-bolder mb-1 d-block">Campaña Normal</span>
+              </span>
+            </label>
+          </div>
+          <div class="col-12 my-2">
+            <label
+              class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+              [ngClass]="{ active: type_campaign == 2 }"
+              t-button="true"
+            >
+              <span
+                class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1"
+              >
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  (click)="changeTypeCampaign(2)"
+                  name="type_campaign"
+                  value="2"
+                  [checked]="type_campaign == 2"
+                />
+              </span>
+              <span class="ms-5">
+                <span class="fs-6 fw-bolder mb-1 d-block">Campaña Flash</span>
+              </span>
+            </label>
+          </div>
+          <div class="col-12 my-2">
+            <label
+              class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
+              [ngClass]="{ active: type_campaign == 3 }"
+              t-button="true"
+            >
+              <span
+                class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1"
+              >
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  (click)="changeTypeCampaign(3)"
+                  name="type_campaign"
+                  value="3"
+                  [checked]="type_campaign == 3"
+                />
+              </span>
+              <span class="ms-5">
+                <span class="fs-6 fw-bolder mb-1 d-block">Campaña Link</span>
+              </span>
+            </label>
+          </div>
+        </div>
       </div>
       <div class="col-lg-4 fv-row fv-plugins-icon-container">
         <label class="fw-semibold fs-6 py-2 required"
@@ -81,68 +145,27 @@
     </div>
     <div class="row mb-6">
       <div class="col-lg-4 fv-row fv-plugins-icon-container">
-        <label class="fw-semibold fs-6 py-2 required">Gestión de uso:</label>
+        <label class="fw-semibold fs-6 py-2 required">Gestión de fechas:</label>
         <div class="row">
           <div class="col-6">
-            <label
-              class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
-              [ngClass]="{ active: type_count == 1 }"
-              t-button="true"
-            >
-              <span
-                class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1"
-              >
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  (click)="changeTypeCount(1)"
-                  name="type_count"
-                  value="1"
-                  [checked]="type_count == 1"
-                />
-              </span>
-              <span class="ms-5">
-                <span class="fs-6 fw-bolder mb-1 d-block">Ilimitado</span>
-              </span>
-            </label>
+            <div class="input-group input-group-solid">
+              <input
+                type="date"
+                class="form-control form-control-lg form-control-solid"
+                [(ngModel)]="start_date"
+              />
+            </div>
           </div>
           <div class="col-6">
-            <label
-              class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
-              [ngClass]="{ active: type_count == 2 }"
-              data-kt-button="true"
-            >
-              <span
-                class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1"
-              >
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  (click)="changeTypeCount(2)"
-                  name="type_count"
-                  value="2"
-                  [checked]="type_count == 2"
-                />
-              </span>
-              <span class="ms-5">
-                <span class="fs-6 fw-bolder mb-1 d-block">Limitado</span>
-              </span>
-            </label>
+            <div class="input-group input-group-solid">
+              <input
+                type="date"
+                class="form-control form-control-lg form-control-solid"
+                [(ngModel)]="end_date"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="col-lg-3 fv-row fv-plugins-icon-container"
-        *ngIf="type_count == 2"
-      >
-        <label class="fw-semibold fs-6 py-2 required">Nº de Usos:</label>
-        <input
-          type="number"
-          name="num_use"
-          [(ngModel)]="num_use"
-          class="form-control form-control-lg form-control-solid"
-          placeholder="5"
-        />
       </div>
       <div class="col-lg-2">
         <label class="fw-semibold fs-6 py-2 required">Estado:</label>
@@ -164,7 +187,7 @@
           <div class="col-12 my-2">
             <label
               class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
-              [ngClass]="{ active: type_coupon == 1 }"
+              [ngClass]="{ active: discount_type == 1 }"
               t-button="true"
             >
               <span
@@ -174,9 +197,9 @@
                   class="form-check-input"
                   type="radio"
                   (click)="changeTypeCoupon(1)"
-                  name="type_coupon"
+                  name="discount_type"
                   value="1"
-                  [checked]="type_coupon == 1"
+                  [checked]="discount_type == 1"
                 />
               </span>
               <span class="ms-5">
@@ -187,7 +210,7 @@
           <div class="col-12 my-2">
             <label
               class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
-              [ngClass]="{ active: type_coupon == 2 }"
+              [ngClass]="{ active: discount_type == 2 }"
               t-button="true"
             >
               <span
@@ -197,9 +220,9 @@
                   class="form-check-input"
                   type="radio"
                   (click)="changeTypeCoupon(2)"
-                  name="type_coupon"
+                  name="discount_type"
                   value="2"
-                  [checked]="type_coupon == 2"
+                  [checked]="discount_type == 2"
                 />
               </span>
               <span class="ms-5">
@@ -210,7 +233,7 @@
           <div class="col-12 my-2">
             <label
               class="btn btn-outline btn-outline-dashed btn-outline-default d-flex text-start p-6"
-              [ngClass]="{ active: type_coupon == 3 }"
+              [ngClass]="{ active: discount_type == 3 }"
               t-button="true"
             >
               <span
@@ -220,9 +243,9 @@
                   class="form-check-input"
                   type="radio"
                   (click)="changeTypeCoupon(3)"
-                  name="type_coupon"
+                  name="discount_type"
                   value="3"
-                  [checked]="type_coupon == 3"
+                  [checked]="discount_type == 3"
                 />
               </span>
               <span class="ms-5">
@@ -234,7 +257,7 @@
       </div>
       <div class="col-4">
         <div class="row">
-          <div class="col-12" *ngIf="type_coupon == 1">
+          <div class="col-12" *ngIf="discount_type == 1">
             <div class="row">
               <div class="col-10 my-2">
                 <label class="fw-semibold fs-6 required mb-1">Productos:</label>
@@ -260,7 +283,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12" *ngIf="type_coupon == 2">
+          <div class="col-12" *ngIf="discount_type == 2">
             <div class="row">
               <div class="col-10 my-2">
                 <label class="fw-semibold fs-6 required mb-1"
@@ -288,7 +311,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12" *ngIf="type_coupon == 3">
+          <div class="col-12" *ngIf="discount_type == 3">
             <div class="row">
               <div class="col-10 my-2">
                 <label class="fw-semibold fs-6 required mb-1">Marcas:</label>
@@ -318,7 +341,7 @@
       </div>
       <div class="col-4">
         <div class="row">
-          <div class="col-12" *ngIf="type_coupon == 1">
+          <div class="col-12" *ngIf="discount_type == 1">
             <div
               id="kt_table_users_wrapper"
               class="dt-container dt-bootstrap5 dt-empty-footer"
@@ -343,13 +366,25 @@
                       <td>
                         {{ product.title }}
                       </td>
-                      <td>
+                      <td class="text-end">
                         <button
                           class="ml-5 btn btn-sm btn-danger"
                           (click)="removeProduct(product)"
                         >
                           x
                         </button>
+                        <a
+                          href="#"
+                          onclick="return false"
+                          (click)="copyLink(product)"
+                          ngbTooltip="Copiar enlace"
+                          class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                        >
+                          <i class="ki-duotone ki-save-2 fs-2 mx-1"
+                            ><span class="path1"></span
+                            ><span class="path2"></span
+                          ></i>
+                        </a>
                       </td>
                     </tr>
                   </tbody>
@@ -357,7 +392,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12" *ngIf="type_coupon == 2">
+          <div class="col-12" *ngIf="discount_type == 2">
             <div
               id="kt_table_users_wrapper"
               class="dt-container dt-bootstrap5 dt-empty-footer"
@@ -396,7 +431,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12" *ngIf="type_coupon == 3">
+          <div class="col-12" *ngIf="discount_type == 3">
             <div
               id="kt_table_users_wrapper"
               class="dt-container dt-bootstrap5 dt-empty-footer"
@@ -415,8 +450,8 @@
                   <tbody>
                     <tr *ngFor="let brand of brands_add; let i = index">
                       <!-- <td>
-                          <img [src]="brand.image" width="60" alt="" />
-                        </td> -->
+                            <img [src]="brand.image" width="60" alt="" />
+                          </td> -->
                       <td>
                         {{ brand.name }}
                       </td>
