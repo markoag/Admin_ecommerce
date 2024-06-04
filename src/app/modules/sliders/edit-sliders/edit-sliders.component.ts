@@ -20,6 +20,7 @@ export class EditSlidersComponent {
     'https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/illustrations/easy/2.svg';
   file_image: any = null;
   type: any = 1;
+  type_view: any = null;
   original_price: any = null;
   campaign_price: any = null;
 
@@ -44,6 +45,7 @@ export class EditSlidersComponent {
       this.title = res.slider.title;
       this.label = res.slider.label;
       this.type = res.slider.type;
+      this.type_view = res.slider.type_view;
       this.subtitle = res.slider.subtitle;
       this.link = res.slider.link;
       this.color = res.slider.color;
@@ -76,12 +78,27 @@ export class EditSlidersComponent {
     }, 50);
   }
 
-  save() {
+  changeType(type: any) {
+    this.type = type;
+    this.type_view = null;
+    this.original_price = null;
+    this.campaign_price = null;
+  }
+
+  changeTypeView(value: number) {
+    this.type_view = value;
+  }
+
+  save() {    
     if (!this.title || !this.subtitle) {
       this.toastr.error('Validación', 'Los campos con * son obligatorios');
       return;
     }
-    if (this.type == 3 && !this.original_price || !this.campaign_price) {
+    if (this.type == 2 && !this.type_view) {
+      this.toastr.error('Validación', 'Debe seleccionar un tipo de vista');
+      return;
+    }
+    if (this.type == 3 && (!this.original_price || !this.campaign_price)) {
       this.toastr.error(
         'Validación',
         'Los campos de precio original y precio de campaña son obligatorios'
@@ -99,12 +116,19 @@ export class EditSlidersComponent {
       formData.append('imagen', this.file_image);
     }
     formData.append('type', this.type);
-    if (this.original_price) {
+    if (this.type == 1) {
+      formData.append('type_view', '');
+      formData.append('original_price', '');
+      formData.append('campaign_price', '');
+  } else if (this.type == 2) {
+      formData.append('type_view', this.type_view);
+      formData.append('original_price', '');
+      formData.append('campaign_price', '');
+  } else if (this.type == 3) {
+      formData.append('type_view', '');
       formData.append('original_price', this.original_price);
-    }
-    if (this.campaign_price) {
       formData.append('campaign_price', this.campaign_price);
-    }
+  }
     if (this.link) {
       formData.append('link', this.link);
     }

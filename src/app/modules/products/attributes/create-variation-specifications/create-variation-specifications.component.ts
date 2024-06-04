@@ -102,7 +102,7 @@ export class CreateVariationSpecificationsComponent {
     this.attributeService
       .listSpecification(this.PRODUCT_ID)
       .subscribe((resp: any) => {
-        // console.log(resp);
+        console.log(resp);
         this.specifications = resp.specifications;
       });
   }
