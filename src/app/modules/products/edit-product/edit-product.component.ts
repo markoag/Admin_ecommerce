@@ -53,7 +53,7 @@ export class EditProductComponent {
     public productService: ProductService,
     private toastr: ToastrService,
     private activeRoute: ActivatedRoute,
-    public modalService: NgbModal,
+    public modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -177,7 +177,7 @@ export class EditProductComponent {
   }
 
   addImagen() {
-    if(!this.imagen_add){
+    if (!this.imagen_add) {
       this.toastr.error('Validación', 'Necesita subir una imagen');
       return;
     }
@@ -194,7 +194,10 @@ export class EditProductComponent {
     });
   }
   removeImages(id: number) {
-    const modalRef = this.modalService.open(DeleteImageAddComponent, {centered: true, size: 'md'});
+    const modalRef = this.modalService.open(DeleteImageAddComponent, {
+      centered: true,
+      size: 'md',
+    });
     modalRef.componentInstance.id = id;
 
     modalRef.componentInstance.ImageD.subscribe((res: any) => {
@@ -241,7 +244,9 @@ export class EditProductComponent {
     if (this.file_image) {
       formData.append('portada', this.file_image);
     }
-    formData.append('summary', this.summary);
+    if (this.summary) {
+      formData.append('summary', this.summary);
+    }
     formData.append('description', this.description);
     formData.append('categorie_first_id', this.categorie_first_id);
     if (this.categorie_second_id) {

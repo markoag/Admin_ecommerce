@@ -60,7 +60,7 @@ export class ListProductComponent {
     this.productService
       .listProducts(data, page)
       .subscribe((res: any) => {
-        // console.log(res);
+        console.log(res);
         this.products = res.products.data;
         this.totalPages = res.total;
         this.currentPage = page;

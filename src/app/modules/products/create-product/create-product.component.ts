@@ -151,7 +151,9 @@ export class CreateProductComponent {
     formData.append('price_desc', this.price_desc + '');
     formData.append('brand_id', this.brand_id);
     formData.append('portada', this.file_image);
-    formData.append('summary', this.summary);
+    if (this.summary) {
+      formData.append('summary', this.summary);
+    }    
     formData.append('description', this.description);
     formData.append('categorie_first_id', this.categorie_first_id);
     if (this.categorie_second_id) {

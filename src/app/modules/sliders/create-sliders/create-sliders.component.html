@@ -57,6 +57,26 @@
           <img class="img py-3" [src]="img_preview" width="200" alt="" />
         </div>
       </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 my-2" *ngIf="type == 3">
+        <label class="form-label fw-semibold fs-6 py-2"
+          >Sube tu imagen para producto:</label
+        >
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="customFile"
+            accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"
+            (change)="processFile2($event)"
+          />
+          <label class="custom-file-label" for="customFile">
+            Elija el archivo</label
+          >
+        </div>
+        <div class="">
+          <img class="img py-3" [src]="img_preview2" width="200" alt="" />
+        </div>
+      </div>
       <div class="col-lg-6 fv-row fv-plugins-icon-container">
         <div class="row">
           <div class="col-12">
