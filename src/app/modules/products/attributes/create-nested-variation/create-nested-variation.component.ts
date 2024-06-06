@@ -135,6 +135,7 @@ export class CreateNestedVariationComponent {
         this.variations_attribute_id = '';
         this.precio_add = 0;
         this.stock_add = 0;
+        this.properties = [];
       }
     });
   }

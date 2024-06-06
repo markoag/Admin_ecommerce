@@ -244,9 +244,7 @@ export class EditProductComponent {
     if (this.file_image) {
       formData.append('portada', this.file_image);
     }
-    if (this.summary) {
-      formData.append('summary', this.summary);
-    }
+    formData.append('summary', this.summary);
     formData.append('description', this.description);
     formData.append('categorie_first_id', this.categorie_first_id);
     if (this.categorie_second_id) {

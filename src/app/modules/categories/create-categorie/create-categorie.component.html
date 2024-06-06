@@ -20,7 +20,7 @@
               (click)="changeTypeCategorie(1)"
               name="usage"
               value="1"
-              checked="checked"
+              [checked]="type_categorie == 1"
             />
           </span>
           <span class="ms-5">
@@ -44,6 +44,7 @@
               (click)="changeTypeCategorie(2)"
               name="usage"
               value="2"
+              [checked]="type_categorie == 2"
             />
           </span>
           <span class="ms-5">
@@ -67,6 +68,7 @@
               (click)="changeTypeCategorie(3)"
               name="usage"
               value="3"
+              [checked]="type_categorie == 3"
             />
           </span>
           <span class="ms-5">

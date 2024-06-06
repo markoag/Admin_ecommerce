@@ -237,6 +237,7 @@ export class CreateVariationSpecificationsComponent {
         this.value_add = null;
         this.propertie_id = null;
         this.specification_attribute_id = '';
+        this.properties = [];
       }
     });
   }
@@ -335,6 +336,7 @@ export class CreateVariationSpecificationsComponent {
         this.variations_attribute_id = '';
         this.precio_add = 0;
         this.stock_add = 0;
+        this.properties = [];
       }
     });
   }
