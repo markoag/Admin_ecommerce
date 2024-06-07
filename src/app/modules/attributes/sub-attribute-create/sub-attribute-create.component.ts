@@ -3,6 +3,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AttributesService } from '../service/attributes.service';
 import { SubAttributeDeleteComponent } from '../sub-attribute-delete/sub-attribute-delete.component';
+import { SubAttributeUpdateComponent } from '../sub-attribute-update/sub-attribute-update.component';
 
 @Component({
   selector: 'app-sub-attribute-create',
@@ -15,7 +16,7 @@ export class SubAttributeCreateComponent {
   @Input() attribute: any;
   @Input() properties: any = [];
 
-  type_attribute: number = 1; 
+  // type_attribute: number = 1; 
   isLoading$: any;
   
   name: string = '';
@@ -47,7 +48,7 @@ export class SubAttributeCreateComponent {
       name: this.name,
       code: this.color,
       attribute_id: this.attribute.id,
-      state: 1,
+      // state: 1,
     };
     this.attributeService.createProperties(data).subscribe((res: any) => {
       console.log(res);
@@ -62,6 +63,24 @@ export class SubAttributeCreateComponent {
       this.type_action = 1;
       // this.modal.close();
     })
+  }
+
+  openModalEdit(propertie: any) {
+    const modal = this.modalService.open(SubAttributeUpdateComponent, {
+      centered: true,
+      size: 'md',
+    });
+    modal.componentInstance.propertie = propertie;    
+
+    modal.componentInstance.PropertyE.subscribe((edit: any) => {
+      console.log(edit);
+      let INDEX = this.properties.findIndex(
+        (item: any) => item.id == edit.propertie.id
+      );
+      if (INDEX != -1) {
+        this.properties[INDEX] = edit.propertie;
+      }
+    });
   }
 
   delete(propertie: any) {

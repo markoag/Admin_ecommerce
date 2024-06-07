@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbModalModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg-2';
+import { SubAttributeUpdateComponent } from './sub-attribute-update/sub-attribute-update.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
     ListAttributeComponent,
     SubAttributeCreateComponent,
     SubAttributeDeleteComponent,
+    SubAttributeUpdateComponent,
   ],
   imports: [
     CommonModule,
