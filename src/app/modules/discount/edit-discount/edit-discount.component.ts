@@ -99,7 +99,7 @@ export class EditDiscountComponent {
 
   copyLink(product: any) {
     var aux = document.createElement('input');
-    aux.setAttribute('value', URL_TIENDA+"/productos/"+product.sku+"?descuentos="+this.DISCOUNT.code);
+    aux.setAttribute('value', URL_TIENDA+"/producto/"+product.slug+"?campaign_discount="+this.DISCOUNT.code);
     document.body.appendChild(aux);
     aux.select();
     document.execCommand('copy');
