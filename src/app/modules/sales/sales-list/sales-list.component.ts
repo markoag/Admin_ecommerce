@@ -8,11 +8,14 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./sales-list.component.scss'],
 })
 export class SalesListComponent {
-  sales: any[] = [];
+  sales: any = [];
   search: string = '';
   totalPages: number = 0;
   currentPage: number = 1;
   isLoading$: any;
+  start_date: any;
+  end_date: any;
+  method_payment: any;
 
   brands: any = [];
   brand_id: string = '';
@@ -24,6 +27,7 @@ export class SalesListComponent {
   categories_seconds_backups: any = [];
   categories_thirds: any = [];
   categories_thirds_backups: any = [];
+  method_payment_list: any = [];
 
   constructor(
     public salesService: SalesService,
@@ -38,11 +42,12 @@ export class SalesListComponent {
   }
   configAll() {
     this.salesService.configAll().subscribe((res: any) => {
-      // console.log(res);
+      console.log(res);
       this.brands = res.brands;
       this.categories_first = res.categories_first;
       this.categories_seconds = res.categories_seconds;
       this.categories_thirds = res.categories_thirds;
+      this.method_payment_list = res.method_payment_list;
     });
   }
 
@@ -53,6 +58,9 @@ export class SalesListComponent {
       categorie_first_id: this.categorie_first_id,
       categorie_second_id: this.categorie_second_id,
       categorie_third_id: this.categorie_third_id,
+      start_date: this.start_date,
+      end_date: this.end_date,
+      method_payment: this.method_payment,
     };
     this.salesService.listSales(data, page).subscribe(
       (res: any) => {
@@ -88,6 +96,18 @@ export class SalesListComponent {
   }
 
   searchTo() {
+    this.listSales();
+  }
+
+  reset() {
+    this.search = '';
+    this.brand_id = '';
+    this.categorie_first_id = '';
+    this.categorie_second_id = '';
+    this.categorie_third_id = '';
+    this.start_date = null;
+    this.end_date = null;
+    this.method_payment = '';
     this.listSales();
   }
 

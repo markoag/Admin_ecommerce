@@ -20,7 +20,7 @@
           class="form-control form-control-solid w-250px ps-13"
           placeholder="Buscar Ordenes"
         />
-      </div>
+      </div>      
       <div class="row px-7 py-5">
         <div class="col-3">
           <select
@@ -93,7 +93,7 @@
           class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-9"
             data-kt-user-table-toolbar="base"
             >
-            <a (click)="searchTo()" class="btn btn-dark mx-9">
+            <a (click)="reset()" class="btn btn-dark mx-9">
               <i class="ki-duotone ki-arrows-circle fs-2">
                 <span class="path1"></span><span class="path2"></span>
               </i>
@@ -101,6 +101,39 @@
           </div>
         </div>
       </div>
+      <div class="row px-9 mb-1 w-50">
+        <div class="col-4">
+          <div class="input-group input-group-solid">
+            <input type="date"
+            class="form-control form-control-lg form-control-solid"
+            [(ngModel)]="start_date"
+            />
+          </div>
+          <small>Fecha Inicio</small>
+        </div>
+        <div class="col-4">
+          <div class="input-group input-group-solid">
+            <input type="date"
+            class="form-control form-control-lg form-control-solid"
+            [(ngModel)]="end_date"
+            />
+          </div>
+          <small>Fecha Fin</small>
+        </div>
+        <div class="col-4">
+          <select
+            class="form-control form-select-solid fw-bolder"
+            name="method_payment"
+            placeholder="Selec. Metodo de Pago"
+            [(ngModel)]="method_payment"            
+          >
+            <option value="">Selec. Forma de Pago</option>
+            <ng-container *ngFor="let item of method_payment_list">
+              <option [value]="item.method_payment">{{ item.method_payment }}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>      
       <!--end::Search-->
     </div>
     <!--begin::Card title-->
@@ -237,7 +270,7 @@
                 </td>
                 <td>
                   <span>
-                    {{ sale.n_trasaction }}
+                    {{ sale.n_transaction }}
                   </span>
                 </td>
                 <td>
@@ -254,10 +287,10 @@
                   </span>
                 </td>
                 <td>
-                  <span>
-                    {{ sale.sale_addres.province.name }}/{{
-                      sale.sale_addres.city.name
-                    }}/{{ sale.sale_addres.parish.name }}
+                  <span *ngIf="sale.sale_address.length > 0 && sale.sale_address[0]?.id && sale.sale_address[0]?.province && sale.sale_address[0]?.city && sale.sale_address[0]?.parish">
+                    {{ sale.sale_address[0].province.name }} / {{
+                      sale.sale_address[0].city.name
+                    }} / {{ sale.sale_address[0].parish.name }}
                   </span>
                 </td>
                 <td>
@@ -272,12 +305,12 @@
                     >APROBADO</span
                   >
                   <span
-                    class="badge badge-light-success fs-7 fw-bold"
+                    class="badge badge-light-danger fs-7 fw-bold"
                     *ngIf="sale.state == 3"
                     >RECHAZADO</span
                   >
                   <span
-                    class="badge badge-light-success fs-7 fw-bold"
+                    class="badge badge-light-info fs-7 fw-bold"
                     *ngIf="sale.state == 4"
                     >CANCELADO</span
                   >
@@ -299,7 +332,7 @@
         <ngb-pagination
           [collectionSize]="totalPages"
           [(page)]="currentPage"
-          [pageSize]="10"
+          [pageSize]="25"
           [rotate]="true"
           [boundaryLinks]="true"
           (pageChange)="loadPage($event)"
