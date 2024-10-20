@@ -20,7 +20,7 @@
           class="form-control form-control-solid w-250px ps-13"
           placeholder="Buscar Ordenes"
         />
-      </div>      
+      </div>
       <div class="row px-7 py-5">
         <div class="col-3">
           <select
@@ -90,11 +90,21 @@
             </a>
           </div>
           <div
-          class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-9"
+            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-9"
             data-kt-user-table-toolbar="base"
-            >
+          >
             <a (click)="reset()" class="btn btn-dark mx-9">
               <i class="ki-duotone ki-arrows-circle fs-2">
+                <span class="path1"></span><span class="path2"></span>
+              </i>
+            </a>
+          </div>
+          <div
+            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-9"
+            data-kt-user-table-toolbar="base"
+          >
+            <a (click)="export_sale()" class="btn btn-success mx-9">
+              <i class="ki-duotone ki-file-down fs-2">
                 <span class="path1"></span><span class="path2"></span>
               </i>
             </a>
@@ -104,18 +114,20 @@
       <div class="row px-9 mb-1 w-50">
         <div class="col-4">
           <div class="input-group input-group-solid">
-            <input type="date"
-            class="form-control form-control-lg form-control-solid"
-            [(ngModel)]="start_date"
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid"
+              [(ngModel)]="start_date"
             />
           </div>
           <small>Fecha Inicio</small>
         </div>
         <div class="col-4">
           <div class="input-group input-group-solid">
-            <input type="date"
-            class="form-control form-control-lg form-control-solid"
-            [(ngModel)]="end_date"
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid"
+              [(ngModel)]="end_date"
             />
           </div>
           <small>Fecha Fin</small>
@@ -125,15 +137,17 @@
             class="form-control form-select-solid fw-bolder"
             name="method_payment"
             placeholder="Selec. Metodo de Pago"
-            [(ngModel)]="method_payment"            
+            [(ngModel)]="method_payment"
           >
             <option value="">Selec. Forma de Pago</option>
             <ng-container *ngFor="let item of method_payment_list">
-              <option [value]="item.method_payment">{{ item.method_payment }}</option>
+              <option [value]="item.method_payment">
+                {{ item.method_payment }}
+              </option>
             </ng-container>
           </select>
         </div>
-      </div>      
+      </div>
       <!--end::Search-->
     </div>
     <!--begin::Card title-->
@@ -287,10 +301,18 @@
                   </span>
                 </td>
                 <td>
-                  <span *ngIf="sale.sale_address.length > 0 && sale.sale_address[0]?.id && sale.sale_address[0]?.province && sale.sale_address[0]?.city && sale.sale_address[0]?.parish">
-                    {{ sale.sale_address[0].province.name }} / {{
-                      sale.sale_address[0].city.name
-                    }} / {{ sale.sale_address[0].parish.name }}
+                  <span
+                    *ngIf="
+                      sale.sale_address_list.length > 0 &&
+                      sale.sale_address_list[0]?.id &&
+                      sale.sale_address_list[0]?.province &&
+                      sale.sale_address_list[0]?.city &&
+                      sale.sale_address_list[0]?.parish
+                    "
+                  >
+                    {{ sale.sale_address_list[0].province.name }} /
+                    {{ sale.sale_address_list[0].city.name }} /
+                    {{ sale.sale_address_list[0].parish.name }}
                   </span>
                 </td>
                 <td>
@@ -317,7 +339,7 @@
                 </td>
                 <td class="text-end">
                   <a
-                    href="#"
+                    [href]="URL_SERVICIOS_R+'/sales/report-pdf/'+sale.id" target="_blank"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   >
                     <i class="ki-duotone ki-document fs-2"

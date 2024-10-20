@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SalesService } from '../service/sales.service';
 import { ToastrService } from 'ngx-toastr';
+import { URL_SERVICIOS } from 'src/app/config/config';
 
 @Component({
   selector: 'app-sales-list',
@@ -16,6 +17,7 @@ export class SalesListComponent {
   start_date: any;
   end_date: any;
   method_payment: any;
+  URL_SERVICIOS_R: any = URL_SERVICIOS;
 
   brands: any = [];
   brand_id: string = '';
@@ -109,6 +111,36 @@ export class SalesListComponent {
     this.end_date = null;
     this.method_payment = '';
     this.listSales();
+  }
+
+  export_sale() {
+    let LINK = '';
+    if (this.search) {
+      LINK += '&search=' + this.search;
+    }
+    if (this.brand_id) {
+      LINK += '&brand_id=' + this.brand_id;
+    }
+    if (this.categorie_first_id) {
+      LINK += '&categorie_first_id=' + this.categorie_first_id;
+    }
+    if (this.categorie_second_id) {
+      LINK += '&categorie_second_id=' + this.categorie_second_id;
+    }
+    if (this.categorie_third_id) {
+      LINK += '&categorie_third_id=' + this.categorie_third_id;
+    }
+    if (this.start_date) {
+      LINK += '&start_date=' + this.start_date;
+    }
+    if (this.end_date) {
+      LINK += '&end_date=' + this.end_date;
+    }
+    if (this.method_payment) {
+      LINK += '&method_payment=' + this.method_payment;
+    }
+
+    window.open(URL_SERVICIOS + "/sales/list-excel?k=1" + LINK, "_blank");
   }
 
   loadPage($event: any) {
